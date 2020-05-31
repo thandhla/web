@@ -5,21 +5,27 @@ import {
 } from '../types/store/workspaces';
 
 export const initialState = {
-  isLoading: false,
-  collections: [],
-  relatedCollections: [],
-  collection: null,
-  created: null,
+  isFetching: false,
+  isCreating: false,
+  workspaces: [],
 };
   
 export default (
   state = initialState, action: WorkspacesActions
 ): WorkspacesState => {
   switch (action.type) {
-    case types.GET_COLLECTIONS_START: {
+    case types.GET_WORKSPACES_START: {
       return {
         ...state,
-        isLoading: true
+        isFetching: true
+      };
+    }
+
+    case types.GET_WORKSPACES_SUCCESS: {
+      return {
+        ...state,
+        isFetching: false,
+        workspaces: action.workspaces
       };
     }
 

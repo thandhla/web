@@ -1,27 +1,23 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import RootStore from '../../types/store/root';
+import { getWorkspaces } from '../../actions/workspaces';
 
 const HomepPage: FC = () => {
-  const { ipcRenderer } = window.require("electron");
-  const queries = {
-    //*
-    workspaces: {
-      action: 'getWorkspaces'
-    }
-    //*/
-    /*
-    newWorkspace: {
-      action: 'createWorkspace',
-      args: {
-        name: 'My workspace'
-      }
-    }
-   //*/
-  };
+  const dispatch = useDispatch();
 
-  console.log(ipcRenderer.sendSync('nbql', queries));
-  
+  useEffect(() => {
+    dispatch(getWorkspaces());
+  }, []);
+
+  const workspaces = useSelector((state: RootStore) => state.workspaces.workspaces);
+
+  console.log({workspaces});
+
   return (
-    <div>Home page</div>
+    <div>
+      <h1>Workspaces</h1>
+    </div>
   )
 };
 

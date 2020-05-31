@@ -1,23 +1,24 @@
 
 export interface WorkspacesState {
-  isLoading: boolean,
-  collections: any[],
-  relatedCollections: any[],
-  collection: any,
-  created: any,
+  isFetching: boolean,
+  isCreating: boolean,
+  workspaces: any[],
 }
 
 export enum WorkspaceActionTypes {
-  GET_COLLECTIONS_START = 'GET_COLLECTIONS_START',
-  GET_COLLECTIONS_SUCCESS = 'GET_COLLECTIONS_SUCCESS'
+  GET_WORKSPACES_START = 'GET_WORKSPACES_START',
+  GET_WORKSPACES_SUCCESS = 'GET_WORKSPACES_SUCCESS'
 }
 
-export interface IActionGetCollectionsFetch {
-  type: WorkspaceActionTypes.GET_COLLECTIONS_START
+export interface IActionGetWorkspacesStart {
+  type: WorkspaceActionTypes.GET_WORKSPACES_START
 }
 
-export interface IActionGetCollectionsSuccess {
-  type: WorkspaceActionTypes.GET_COLLECTIONS_SUCCESS
+export interface IActionGetWorkspacesSuccess {
+  type: WorkspaceActionTypes.GET_WORKSPACES_SUCCESS;
+  workspaces: any[];
 }
 
-export type WorkspacesActions = IActionGetCollectionsSuccess | IActionGetCollectionsFetch;
+export type WorkspacesActions =
+  IActionGetWorkspacesStart |
+  IActionGetWorkspacesSuccess;
