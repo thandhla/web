@@ -1,19 +1,32 @@
 import React, { FC } from 'react';
 import { Route, Switch } from "react-router-dom";
 import HomePage from './pages/HomePage';
+import CreateWorkspacePage from './pages/CreateWorkspacePage';
+import ViewWorkspacePage from './pages/ViewWorkspacePage';
+import routes from '../config/routes';
 
-const routes = [
+const appRoutes = [
   {
-    path: "/",
+    path: routes.home,
     exact: true,
     main: () => <HomePage />
+  },
+  {
+    path: routes.workspaces.create,
+    exact: true,
+    main: () => <CreateWorkspacePage />
+  },
+  {
+    path: routes.workspaces.view,
+    exact: true,
+    main: () => <ViewWorkspacePage />
   }
 ];
 
 const Routes: FC = () => (
   <div className="content">
     <Switch>
-      {routes.map((route, index) =>
+      {appRoutes.map((route, index) =>
         <Route
           key={index}
           path={route.path}

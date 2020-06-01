@@ -1,5 +1,5 @@
-import { WorkspacesState } from './workspaces';
+import { IWorkspacesState } from './workspaces';
 
-export default interface RootStore {
-  workspaces: WorkspacesState
+export default interface IRootStore {
+  workspaces: IWorkspacesState
 }

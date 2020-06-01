@@ -1,60 +1,60 @@
 import {
-  IWorkspacesState,
-  IWorkspacesAction,
-  IWorkspaceActionTypes as types
-} from '../types/store/workspaces';
+  ICollectionsState,
+  ICollectionsAction,
+  ICollectionActionTypes as types
+} from '../types/store/collections';
 
 export const initialState = {
   isFetchingOne: false,
   isFetchingList: false,
   isCreating: false,
-  workspaces: [],
-  workspace: null,
+  collections: [],
+  collection: null,
 };
   
 export default (
-  state = initialState, action: IWorkspacesAction
-): IWorkspacesState => {
+  state = initialState, action: ICollectionsAction
+): ICollectionsState => {
   switch (action.type) {
-    case types.CREATE_WORKSPACE_START: {
+    case types.CREATE_COLLECTION_START: {
       return {
         ...state,
         isCreating: true
       };
     }
-    case types.CREATE_WORKSPACE_SUCCESS: {
+    case types.CREATE_COLLECTION_SUCCESS: {
       return {
         ...state,
         isCreating: false,
-        workspace: action.workspace
+        collection: action.collection
       };
     }
 
-    case types.GET_WORKSPACES_START: {
+    case types.GET_COLLECTIONS_START: {
       return {
         ...state,
         isFetchingList: true
       };
     }
-    case types.GET_WORKSPACES_SUCCESS: {
+    case types.GET_COLLECTIONS_SUCCESS: {
       return {
         ...state,
         isFetchingList: false,
-        workspaces: action.workspaces
+        collections: action.collections
       };
     }
 
-    case types.GET_WORKSPACE_START: {
+    case types.GET_COLLECTION_START: {
       return {
         ...state,
         isFetchingOne: true
       };
     }
-    case types.GET_WORKSPACE_SUCCESS: {
+    case types.GET_COLLECTION_SUCCESS: {
       return {
         ...state,
         isFetchingOne: false,
-        workspace: action.workspace
+        collection: action.collection
       };
     }
 

@@ -1,24 +1,53 @@
+import { IWorkspaceModel } from '../database/mainDB';
 
-export interface WorkspacesState {
-  isFetching: boolean,
+export interface IWorkspacesState {
+  isFetchingOne: boolean,
+  isFetchingList: boolean,
   isCreating: boolean,
-  workspaces: any[],
+  workspaces: IWorkspaceModel[],
+  workspace: null | IWorkspaceModel,
 }
 
-export enum WorkspaceActionTypes {
+export enum IWorkspaceActionTypes {
+  CREATE_WORKSPACE_START = 'CREATE_WORKSPACE_START',
+  CREATE_WORKSPACE_SUCCESS = 'CREATE_WORKSPACE_SUCCESS',
   GET_WORKSPACES_START = 'GET_WORKSPACES_START',
-  GET_WORKSPACES_SUCCESS = 'GET_WORKSPACES_SUCCESS'
+  GET_WORKSPACES_SUCCESS = 'GET_WORKSPACES_SUCCESS',
+  GET_WORKSPACE_START = 'GET_WORKSPACE_START',
+  GET_WORKSPACE_SUCCESS = 'GET_WORKSPACE_SUCCESS',
 }
 
-export interface IActionGetWorkspacesStart {
-  type: WorkspaceActionTypes.GET_WORKSPACES_START
+export interface CreateWorkspaceStart {
+  type: IWorkspaceActionTypes.CREATE_WORKSPACE_START;
 }
 
-export interface IActionGetWorkspacesSuccess {
-  type: WorkspaceActionTypes.GET_WORKSPACES_SUCCESS;
-  workspaces: any[];
+export interface CreateWorkspaceSuccess {
+  type: IWorkspaceActionTypes.CREATE_WORKSPACE_SUCCESS;
+  workspace: IWorkspaceModel;
 }
 
-export type WorkspacesActions =
-  IActionGetWorkspacesStart |
-  IActionGetWorkspacesSuccess;
+export interface GetWorkspacesStart {
+  type: IWorkspaceActionTypes.GET_WORKSPACES_START
+}
+
+export interface GetWorkspacesSuccess {
+  type: IWorkspaceActionTypes.GET_WORKSPACES_SUCCESS;
+  workspaces: IWorkspaceModel[];
+}
+
+export interface GetWorkspaceStart {
+  type: IWorkspaceActionTypes.GET_WORKSPACE_START
+}
+
+export interface GetWorkspaceSuccess {
+  type: IWorkspaceActionTypes.GET_WORKSPACE_SUCCESS;
+  workspace: IWorkspaceModel;
+}
+
+export type IWorkspacesAction =
+  | CreateWorkspaceStart
+  | CreateWorkspaceSuccess
+  | GetWorkspacesStart
+  | GetWorkspacesSuccess
+  | GetWorkspaceStart
+  | GetWorkspaceSuccess;
