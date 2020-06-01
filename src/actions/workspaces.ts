@@ -7,6 +7,7 @@ import {
   GetWorkspacesSuccess,
   GetWorkspaceStart,
   GetWorkspaceSuccess,
+  IClearWorkspace,
 } from '../types/store/workspaces';
 import RootStore from '../types/store/root';
 import { queries } from '@testing-library/react';
@@ -81,5 +82,15 @@ export const getWorkspace = (id: string) => {
     };
     
     dispatch(getWorkspaceSuccess);
+  }
+}
+
+export const clearWorkspace = () => {
+  return (dispatch: Dispatch) => {
+    const actionClearWorkspace: IClearWorkspace = {
+      type: types.CLEAR_WORKSPACE,
+    };
+    
+    dispatch(actionClearWorkspace);
   }
 }

@@ -7,6 +7,7 @@ import {
   GetCollectionsSuccess,
   GetCollectionStart,
   GetCollectionSuccess,
+  ClearCollections,
 } from '../types/store/collections';
 import RootStore from '../types/store/root';
 
@@ -82,5 +83,15 @@ export const getCollection = (id: string) => {
     };
     
     dispatch(getCollectionSuccess);
+  }
+}
+
+export const clearCollections = () => {
+  return (dispatch: Dispatch) => {
+    const actionClearCollections: ClearCollections = {
+      type: types.CLEAR_COLLECTIONS,
+    };
+    
+    dispatch(actionClearCollections);
   }
 }
