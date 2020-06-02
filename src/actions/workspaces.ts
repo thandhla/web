@@ -10,7 +10,6 @@ import {
   IClearWorkspace,
 } from '../types/store/workspaces';
 import RootStore from '../types/store/root';
-import { queries } from '@testing-library/react';
 
 const { ipcRenderer } = window.require("electron");
 
@@ -29,6 +28,12 @@ export const createWorkspace = (name: string) => {
       }
     };
     const response = ipcRenderer.sendSync('nbql', [null, queries]);
+
+    if (response?.errors?.workspace) {
+      console.log({ createWorkspaceError: response.errors.workspace });
+      return;
+    }
+
     const createWorkspaceSuccess: CreateWorkspaceSuccess = {
       type: types.CREATE_WORKSPACE_SUCCESS,
       workspace: response.data.workspace 

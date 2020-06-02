@@ -1,12 +1,10 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import RootStore from '../../types/store/root';
 import { getWorkspace, clearWorkspace } from '../../actions/workspaces';
 import { getCollections, clearCollections } from '../../actions/collections';
 import { Link, useParams } from 'react-router-dom';
 import routes from '../../config/routes';
-import url from '../../utils/url';
-import workspaces from '../../reducers/workspaces';
 
 const ViewWorkspacePage: FC = () => {
   const dispatch = useDispatch();
@@ -14,18 +12,18 @@ const ViewWorkspacePage: FC = () => {
 
   useEffect(() => {
     dispatch(getWorkspace(workspaceId));
-  }, [dispatch]);
+  }, [dispatch, workspaceId]);
 
   useEffect(() => {
     dispatch(getCollections(workspaceId));
-  }, [dispatch]);
+  },[dispatch, workspaceId]);
 
   useEffect(() => {
     return () => {
       dispatch(clearWorkspace());
       dispatch(clearCollections());
     }
-  }, []);
+  }, [dispatch]);
 
   const { workspace } = useSelector((state: RootStore) => state.workspaces);
 
