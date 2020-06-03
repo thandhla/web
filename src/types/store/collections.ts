@@ -1,6 +1,6 @@
-import { ICollectionModel } from '../database/workspaceDB';
+import { ICollectionModel } from '../database';
 
-export interface ICollectionsState {
+export default interface ICollectionsState {
   isFetchingOne: boolean,
   isFetchingList: boolean,
   isCreating: boolean,

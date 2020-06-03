@@ -1,6 +1,6 @@
-import { IWorkspaceModel } from '../database/mainDB';
+import { IWorkspaceModel } from '../database';
 
-export interface IWorkspacesState {
+export default interface IWorkspacesState {
   isFetchingOne: boolean,
   isFetchingList: boolean,
   isCreating: boolean,

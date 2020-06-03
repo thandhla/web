@@ -7,3 +7,8 @@ export interface IWorkspaceModel {
 export interface IMainDB {
   workspaces: IWorkspaceModel[],
 }
+
+export interface ICollectionModel {
+  id: string;
+  name: string;
+}

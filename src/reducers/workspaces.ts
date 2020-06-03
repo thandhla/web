@@ -1,10 +1,9 @@
-import {
-  IWorkspacesState,
+import IWorkspacesState, {
   IWorkspacesAction,
   IWorkspaceActionTypes as types
 } from '../types/store/workspaces';
 
-export const initialState = {
+export const initialState: IWorkspacesState = {
   isFetchingOne: false,
   isFetchingList: false,
   isCreating: false,

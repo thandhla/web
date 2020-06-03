@@ -54,6 +54,13 @@ export const getWorkspaces = () => {
     const queries = {
       workspaces: {
         action: 'getWorkspaces'
+      },
+      logger: {
+        action: 'pluginAction',
+        args: {
+          plugin: 'logger',
+          payload: 'testo'
+        }
       }
     };
     const response = ipcRenderer.sendSync('nbql', [null, queries]);

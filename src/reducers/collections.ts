@@ -1,10 +1,9 @@
-import {
-  ICollectionsState,
+import ICollectionsState, {
   ICollectionsAction,
   ICollectionActionTypes as types
 } from '../types/store/collections';
 
-export const initialState = {
+export const initialState: ICollectionsState = {
   isFetchingOne: false,
   isFetchingList: false,
   isCreating: false,
