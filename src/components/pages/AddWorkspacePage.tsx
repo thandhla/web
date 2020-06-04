@@ -6,7 +6,7 @@ import { Link, useHistory } from 'react-router-dom';
 import routes from '../../config/routes';
 import url from '../../utils/url';
 
-const CreateWorkspacePage: FC = () => {
+const AddWorkspacePage: FC = () => {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -15,7 +15,7 @@ const CreateWorkspacePage: FC = () => {
 
   useEffect(() => {
     if (workspace) {
-      history.push(url(routes.workspaces.view, workspace));
+      history.push(url(routes.workspaces.read, { workspaceId: workspace.id }));
     }
   }, [history, workspace]);
   
@@ -54,4 +54,4 @@ const CreateWorkspacePage: FC = () => {
   )
 };
 
-export default CreateWorkspacePage;
+export default AddWorkspacePage;

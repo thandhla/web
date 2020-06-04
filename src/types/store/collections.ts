@@ -15,7 +15,8 @@ export enum ICollectionActionTypes {
   GET_COLLECTIONS_SUCCESS = 'GET_COLLECTIONS_SUCCESS',
   GET_COLLECTION_START = 'GET_COLLECTION_START',
   GET_COLLECTION_SUCCESS = 'GET_COLLECTION_SUCCESS',
-  CLEAR_COLLECTIONS = 'CLEAR_COLLECTIONS'
+  CLEAR_COLLECTIONS = 'CLEAR_COLLECTIONS',
+  CLEAR_COLLECTION = 'CLEAR_COLLECTION',
 }
 
 export interface CreateCollectionStart {
@@ -49,6 +50,10 @@ export interface ClearCollections {
   type: ICollectionActionTypes.CLEAR_COLLECTIONS;
 }
 
+export interface ClearCollection {
+  type: ICollectionActionTypes.CLEAR_COLLECTION;
+}
+
 export type ICollectionsAction =
   | CreateCollectionStart
   | CreateCollectionSuccess
@@ -56,4 +61,5 @@ export type ICollectionsAction =
   | GetCollectionsSuccess
   | GetCollectionStart
   | GetCollectionSuccess
-  | ClearCollections;
+  | ClearCollections
+  | ClearCollection;

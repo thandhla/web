@@ -15,6 +15,7 @@ export enum IWorkspaceActionTypes {
   GET_WORKSPACES_SUCCESS = 'GET_WORKSPACES_SUCCESS',
   GET_WORKSPACE_START = 'GET_WORKSPACE_START',
   GET_WORKSPACE_SUCCESS = 'GET_WORKSPACE_SUCCESS',
+  CLEAR_WORKSPACES = 'CLEAR_WORKSPACES',
   CLEAR_WORKSPACE = 'CLEAR_WORKSPACE',
 }
 
@@ -45,6 +46,10 @@ export interface GetWorkspaceSuccess {
   workspace: IWorkspaceModel;
 }
 
+export interface IClearWorkspaces {
+  type: IWorkspaceActionTypes.CLEAR_WORKSPACES;
+}
+
 export interface IClearWorkspace {
   type: IWorkspaceActionTypes.CLEAR_WORKSPACE;
 }
@@ -56,4 +61,5 @@ export type IWorkspacesAction =
   | GetWorkspacesSuccess
   | GetWorkspaceStart
   | GetWorkspaceSuccess
+  | IClearWorkspaces
   | IClearWorkspace;

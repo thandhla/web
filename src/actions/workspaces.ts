@@ -7,6 +7,7 @@ import {
   GetWorkspacesSuccess,
   GetWorkspaceStart,
   GetWorkspaceSuccess,
+  IClearWorkspaces,
   IClearWorkspace,
 } from '../types/store/workspaces';
 import RootStore from '../types/store/root';
@@ -94,6 +95,16 @@ export const getWorkspace = (id: string) => {
     };
     
     dispatch(getWorkspaceSuccess);
+  }
+}
+
+export const clearWorkspaces = () => {
+  return (dispatch: Dispatch) => {
+    const actionClearWorkspaces: IClearWorkspaces = {
+      type: types.CLEAR_WORKSPACES,
+    };
+    
+    dispatch(actionClearWorkspaces);
   }
 }
 

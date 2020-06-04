@@ -57,6 +57,13 @@ export default (
       };
     }
 
+    case types.CLEAR_WORKSPACES: {
+      return {
+        ...state,
+        workspaces: []
+      };
+    }
+
     case types.CLEAR_WORKSPACE: {
       return {
         ...state,

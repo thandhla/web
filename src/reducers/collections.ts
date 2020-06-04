@@ -64,6 +64,13 @@ export default (
       };
     }
 
+    case types.CLEAR_COLLECTION: {
+      return {
+        ...state,
+        collection: null
+      };
+    }
+
     // do nothing
     default: {
       return state;
