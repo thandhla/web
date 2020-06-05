@@ -7,11 +7,13 @@ import { getCollection, clearCollection } from '../../actions/collections';
 import { getRecords } from '../../actions/records';
 import routes from '../../config/routes';
 import url from '../../utils/url';
-import { Link, useParams, Redirect } from 'react-router-dom';
+import { Link, useParams, Redirect, useLocation } from 'react-router-dom';
 import ListView from '../organisms/ListView';
 
 const BrowseRecordsPage: FC = () => {
   const dispatch = useDispatch();
+  const searchParams = new URLSearchParams(useLocation().search);
+  const recordSearchParam = searchParams.get('r');
   const { workspaceId, collectionId, viewId } = useParams();
   const [collectionFetched, setCollectionFetched] = useState(false);
   const [recordsFetched, setRecordsFetched] = useState(false);
@@ -64,7 +66,7 @@ const BrowseRecordsPage: FC = () => {
   const view = collection.views.find((view: IViewModel) => view.id === viewId);
 
   if (!view) {
-    return <Redirect to={url(routes.records.browse, {
+    return <Redirect to={url(routes.collections.read, {
       workspaceId: workspace.id,
       collectionId: collection.id,
       viewId: collection.defaultView
@@ -95,7 +97,9 @@ const BrowseRecordsPage: FC = () => {
         :
         <p>Loading...</p>
       }
-      
+      {recordSearchParam &&
+        <p>Record Modal</p>
+      }
     </div>
   )
 };

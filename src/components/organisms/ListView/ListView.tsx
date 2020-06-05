@@ -2,13 +2,14 @@ import React, { FC } from 'react';
 import IRootStore from '../../../types/store/root';
 import { ICollectionField } from '../../../types/database';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
-const TableView: FC = () => {
+const ListView: FC = () => {
+  const history = useHistory();
   const { collection, records } = useSelector(({
     collections: { collection},
     records: { records }
   }: IRootStore) => ({ collection, records }));
-  
   
   if (!collection) {
     return <p>Loading....</p>
@@ -16,7 +17,9 @@ const TableView: FC = () => {
 
   const { fields } = collection;
 
-  const rowClicked = (row: string) => row;
+  const createRecord = (collectionId: string) => collectionId;
+
+  const rowClicked = (recordId: string) => history.push({ search: `?r=${recordId}` });
   
   return (
     <table>
@@ -40,14 +43,15 @@ const TableView: FC = () => {
           </tr>
         )}
         <tr>
-          <td
-            colSpan={fields.length}
-            onClick={() => createRecord(collection.id)}
-          ><Button>New</Button></td>
+          <td colSpan={fields.length}>
+            <button
+              onClick={() => createRecord(collection.id)}
+            >New</button>
+          </td>
         </tr>
       </tbody>
     </table>
   );
 }
 
-export default TableView;
+export default ListView;
