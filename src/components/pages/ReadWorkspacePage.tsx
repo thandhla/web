@@ -1,6 +1,6 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import RootStore from '../../types/store/root';
+import IRootStore from '../../types/store/root';
 import { ICollectionModel } from '../../types/database';
 import { getWorkspace, clearWorkspace } from '../../actions/workspaces';
 import { getCollections, clearCollections } from '../../actions/collections';
@@ -11,11 +11,21 @@ import url from '../../utils/url';
 const ReadWorkspacePage: FC = () => {
   const dispatch = useDispatch();
   const { workspaceId } = useParams();
+  const [collectionsFetched, setCollectionsFetched] = useState(false);
+  const { workspace, collections } = useSelector(({
+    workspaces: { workspace },
+    collections: { collections }
+  }: IRootStore) => ({ workspace, collections }));
 
   useEffect(() => {
-    dispatch(getWorkspace(workspaceId));
-    dispatch(getCollections(workspaceId));
-  },[dispatch, workspaceId]);
+    if (!workspace) {
+      dispatch(getWorkspace(workspaceId));
+    }
+    if (workspace && !collectionsFetched) {
+      setCollectionsFetched(true);
+      dispatch(getCollections(workspace.id));
+    }
+  },[dispatch, workspaceId, workspace, collections, collectionsFetched]);
 
   useEffect(() => {
     return () => {
@@ -23,9 +33,6 @@ const ReadWorkspacePage: FC = () => {
       dispatch(clearCollections());
     }
   }, [dispatch]);
-
-  const workspace = useSelector((store: RootStore) => store.workspaces.workspace);
-  const { collections = [] } = useSelector((store: RootStore) => store.collections);
   
   if (!workspace) {
     return <div>Loading ReadWorkspacePage...</div>

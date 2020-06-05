@@ -1,13 +1,17 @@
 import { combineReducers } from 'redux';
-import workspaces, { initialState as workspacesState } from '../reducers/workspaces';
-import collections, { initialState as collectionsState } from '../reducers/collections';
+import workspaces from '../reducers/workspaces';
+//import workspaces, { initialState as workspacesState } from '../reducers/workspaces';
+import collections from '../reducers/collections';
+import records from '../reducers/records';
 
+/*
 export const initialState = {
-  workspaces: workspacesState,
-  collections: collectionsState,
+  workspaces: workspacesState
 };
+*/
 
 export default combineReducers({
   workspaces,
-  collections
+  collections,
+  records
 });

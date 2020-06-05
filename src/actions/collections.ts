@@ -10,14 +10,14 @@ import {
   ClearCollections,
   ClearCollection,
 } from '../types/store/collections';
-import RootStore from '../types/store/root';
+import IRootStore from '../types/store/root';
 
 const { ipcRenderer } = window.require("electron");
 
 export const createCollection = (collection: {
   name: string
 }) => {
-  return (dispatch: Dispatch, getState: () => RootStore) => {
+  return (dispatch: Dispatch, getState: () => IRootStore) => {
     const createCollectionStart: CreateCollectionStart = {
       type: types.CREATE_COLLECTION_START
     };
@@ -31,6 +31,11 @@ export const createCollection = (collection: {
       }
     };
     const workspaceId = getState().workspaces.workspace?.id;
+
+    if (!workspaceId) {
+      return;
+    }
+
     const response = ipcRenderer.sendSync('nbql', [workspaceId, queries]);
     
     if (response?.errors?.collection) {
@@ -48,7 +53,7 @@ export const createCollection = (collection: {
 }
 
 export const getCollections = (workspaceId: string) => {
-  return (dispatch: Dispatch) => {
+  return (dispatch: Dispatch, getState: () => IRootStore) => {
     const getCollectionsStart: GetCollectionsStart = {
       type: types.GET_COLLECTIONS_START
     };
@@ -70,8 +75,11 @@ export const getCollections = (workspaceId: string) => {
   }
 }
 
-export const getCollection = (id: string) => {
-  return (dispatch: Dispatch, getState: () => RootStore) => {
+export const getCollection = (
+  { workspace: workspaceId, collection: collectionId }:
+  { workspace: string, collection: string }
+) => {
+  return (dispatch: Dispatch, getState: () => IRootStore) => {
     const getCollectionStart: GetCollectionStart = {
       type: types.GET_COLLECTION_START
     };
@@ -81,13 +89,9 @@ export const getCollection = (id: string) => {
     const queries = {
       collection: {
         action: 'getCollection',
-        args: { id }
+        args: { id: collectionId }
       }
     };
-    const workspaceId = getState().workspaces.workspace?.id;
-    
-    if (!workspaceId) return;
-
     const response = ipcRenderer.sendSync('nbql', [workspaceId, queries]);
     
     if (response?.errors?.collection) {

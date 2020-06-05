@@ -2,7 +2,7 @@ import React from 'react';
 import HomePage from '../components/pages/HomePage';
 import ReadWorkspacePage from '../components/pages/ReadWorkspacePage';
 import AddWorkspacePage from '../components/pages/AddWorkspacePage'
-import ReadCollectionPage from '../components/pages/ReadCollectionPage';
+import BrowseRecordsPage from '../components/pages/BrowseRecordsPage';
 import AddCollectionPage from '../components/pages/AddCollectionPage';
 
 const routes = {
@@ -18,7 +18,7 @@ const routes = {
     add: '/w/:workspaceId/create-collection',
   },
   records: {
-    browse: '/c/:collectionId/:view',
+    browse: '/w/:workspaceId/c/:collectionId/v/:viewId',
     read: {
       inView: '/c/:collectionId/v/:view/r/:recordId',
       inCollection: '/c/:collectionId/r/:recordId'
@@ -55,7 +55,7 @@ export const appRoutes = [
     exact: true,
     web: true,
     desktop: true,
-    main: () => <ReadCollectionPage />
+    main: () => <BrowseRecordsPage />
   },
   {
     path: routes.collections.add,
@@ -63,8 +63,15 @@ export const appRoutes = [
     web: true,
     desktop: true,
     main: () => <AddCollectionPage />
-  }
+  },
   // Records
+  {
+    path: routes.records.browse,
+    exact: true,
+    web: true,
+    desktop: true,
+    main: () => <BrowseRecordsPage />
+  },
 ];
 
 export default routes;
