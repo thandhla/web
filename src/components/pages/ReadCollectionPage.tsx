@@ -76,7 +76,7 @@ const BrowseRecordsPage: FC = () => {
   const selectedView = (type: IViewTypes) => {
     switch (type) {
       case IViewTypes.list: {
-        return <ListView />
+        return <ListView view={view} />
       }
       
       default: {

@@ -13,15 +13,21 @@ export enum IViewTypes {
   table = 'table'
 }
 
-export interface IViewModel {
-  id: string;
-  type: IViewTypes;
+export enum IFieldTypes {
+  line = 'line'
 }
 
 export interface ICollectionField {
   id: string;
   label: string;
+  type: IFieldTypes;
   options: any;
+}
+
+export interface IViewModel {
+  id: string;
+  type: IViewTypes;
+  fields: string[];
 }
 
 export interface ICollectionModel {

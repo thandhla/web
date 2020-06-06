@@ -1,10 +1,14 @@
 import React, { FC } from 'react';
 import IRootStore from '../../../types/store/root';
-import { ICollectionField } from '../../../types/database';
+import { ICollectionField, IViewModel } from '../../../types/database';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-const ListView: FC = () => {
+interface IListView {
+  view: IViewModel;
+}
+
+const ListView: FC<IListView> = ({ view }) => {
   const history = useHistory();
   const { collection, records } = useSelector(({
     collections: { collection},
@@ -15,7 +19,16 @@ const ListView: FC = () => {
     return <p>Loading....</p>
   }
 
-  const { fields } = collection;
+  const { fields: clFields } = collection;
+  const fields: ICollectionField[] = [];
+  
+  for (const viewField of view.fields) {
+    const field = clFields.find((clField: ICollectionField) => clField.id === viewField);
+
+    if (field) {
+      fields.push(field);
+    }
+  }
 
   const createRecord = (collectionId: string) => collectionId;
 
