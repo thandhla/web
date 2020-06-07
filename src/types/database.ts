@@ -17,12 +17,23 @@ export enum IFieldTypes {
   line = 'line'
 }
 
+export interface IDropDownFieldChoices {
+  value: string;
+  label: string
+}
+
 export interface ICollectionField {
   id: string;
   label: string;
   type: IFieldTypes;
-  options: any;
 }
+
+export interface IDropDownField extends ICollectionField {
+  options: {
+    choices: IDropDownFieldChoices[]
+  };
+}
+
 
 export interface IViewModel {
   id: string;

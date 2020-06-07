@@ -1,8 +1,9 @@
 import { ICollectionField, IRecordModel } from "../../../types/database";
 import React from "react";
+import FieldFactory from "../FieldFactory";
 
 export interface IListRows {
-  viewFields: ICollectionField[];
+  viewFields: any[];
   records: IRecordModel[];
 }
 
@@ -12,7 +13,10 @@ const ListRows = ({ viewFields, records }: IListRows) => (
       <tr key={record.id} onClick={() => ''/*rowClicked(record.id)*/}>
         {viewFields.map((viewfield, index) =>
           <td key={index}>
-            {record.fields[viewfield.id]}
+            <FieldFactory
+              field={viewfield}
+              data={record.fields[viewfield.id]}
+            />
           </td>
         )}
       </tr>

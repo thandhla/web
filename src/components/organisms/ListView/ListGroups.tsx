@@ -1,6 +1,6 @@
 import React from "react";
 import _ from "lodash";
-import { IRecordModel } from "../../../types/database";
+import { IRecordModel, IDropDownField } from "../../../types/database";
 import ListRows, { IListRows } from "./ListRows";
 
 interface IRecordsGroup {
@@ -13,22 +13,16 @@ interface IListGroups extends IListRows {
 
 const ListGroups = ({ viewFields, records, by }: IListGroups) => {
   const groups = _.groupBy(records, `fields.${by}`);
-
+  const field: IDropDownField = viewFields.find((viewField) => viewField.id === by);
   let rowGroups = [];
-  const field = viewFields.find((viewField) => viewField.id === by);
-  let options;
 
-  if (field) {
-    options = field.options;
-  }
-  
   for (const key in groups) {
     const records = groups[key];
-    const option = options.find((option: any) => option.value == key);
+    const choice = field.options.choices.find((choice) => choice.value == key);
     let groupLabel: string;
     
-    if (option) {
-      groupLabel = option.label;
+    if (choice) {
+      groupLabel = choice.label;
     }
 
     rowGroups.push(() => (
@@ -43,7 +37,6 @@ const ListGroups = ({ viewFields, records, by }: IListGroups) => {
     <>
       {rowGroups.map((RowGroup: any, index) =>
         <RowGroup key={index} />
-        /*<ListRows {...{ viewFields, records }} />*/
       )}
     </>
   )

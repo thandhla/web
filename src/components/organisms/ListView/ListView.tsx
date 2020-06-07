@@ -2,10 +2,9 @@ import React, { FC } from 'react';
 import IRootStore from '../../../types/store/root';
 import { ICollectionField, IViewModel, IRecordModel } from '../../../types/database';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import * as _ from "lodash";
 import ListGroups from './ListGroups';
 import ListRows from './ListRows';
+import FieldWidget from '../FieldWidget.tsx';
 
 interface IListView {
   view: IViewModel;
@@ -38,7 +37,7 @@ const ListView: FC<IListView> = ({ view }) => {
         <tr>
           {viewFields.map((viewField: ICollectionField, index: number) =>
             <th key={index}>
-              {viewField.label}
+              <FieldWidget field={viewField} />
             </th>
           )}
         </tr>
