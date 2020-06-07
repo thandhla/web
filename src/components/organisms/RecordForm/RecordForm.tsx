@@ -3,11 +3,11 @@ import IRootStore from '../../../types/store/root';
 import { useSelector, useDispatch } from 'react-redux';
 import { getRecord } from '../../../actions/records';
 
-interface IRecordForm {
+interface CIRecordForm {
   record: string;
 }
 
-const RecordForm: FC<IRecordForm> = ({ record: recordId }) => {
+const RecordForm: FC<CIRecordForm> = ({ record: recordId }) => {
   const dispatch = useDispatch();
   const record = useSelector(({
     records: { record }

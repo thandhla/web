@@ -1,8 +1,12 @@
-import React from 'react';
-import { ICollectionField } from '../../../types/database';
+import React, { FC } from 'react';
+import { ILineField } from '../../../types/database';
 import { IFieldComponent } from '../../../types/components';
 
-function LineField({
+interface CILineField extends IFieldComponent {
+  field: ILineField;
+}
+
+const LineField: FC<CILineField> = ({
   field,
   data,
   edit,
@@ -10,7 +14,7 @@ function LineField({
   onFocus,
   onBlur,
   update
-}: IFieldComponent) {
+}) => {
   const onChange = (e: any) => {
     update(field.id, e.target.value);
   }

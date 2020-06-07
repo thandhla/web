@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import _ from "lodash";
 import { IRecordModel, IDropDownField } from "../../../types/database";
 import ListRows, { IListRows } from "./ListRows";
@@ -7,18 +7,18 @@ interface IRecordsGroup {
   [key: string]: IRecordModel[];
 }
 
-interface IListGroups extends IListRows {
+interface CIListGroups extends IListRows {
   by: string;
 }
 
-const ListGroups = ({ viewFields, records, by }: IListGroups) => {
+const ListGroups: FC<CIListGroups> = ({ viewFields, records, by }) => {
   const groups = _.groupBy(records, `fields.${by}`);
   const field: IDropDownField = viewFields.find((viewField) => viewField.id === by);
   let rowGroups = [];
 
   for (const key in groups) {
     const records = groups[key];
-    const choice = field.options.choices.find((choice) => choice.value == key);
+    const choice = field.options.choices.find((choice) => choice.value === key);
     let groupLabel: string;
     
     if (choice) {

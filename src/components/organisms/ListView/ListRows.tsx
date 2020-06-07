@@ -1,13 +1,13 @@
-import { ICollectionField, IRecordModel } from "../../../types/database";
-import React from "react";
+import { IRecordModel } from "../../../types/database";
+import React, { FC } from "react";
 import FieldFactory from "../FieldFactory";
 
-export interface IListRows {
+export interface CIListRows {
   viewFields: any[];
   records: IRecordModel[];
 }
 
-const ListRows = ({ viewFields, records }: IListRows) => (
+const ListRows: FC<CIListRows> = ({ viewFields, records }) => (
   <>
     {records.map((record) =>
       <tr key={record.id} onClick={() => ''/*rowClicked(record.id)*/}>

@@ -34,6 +34,13 @@ export interface IDropDownField extends ICollectionField {
   };
 }
 
+export interface ILineField extends ICollectionField {
+  options: null;
+}
+
+export type ICollectionFields = 
+  | ILineField
+  | IDropDownField;
 
 export interface IViewModel {
   id: string;

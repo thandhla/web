@@ -6,11 +6,11 @@ import ListGroups from './ListGroups';
 import ListRows from './ListRows';
 import FieldWidget from '../FieldWidget.tsx';
 
-interface IListView {
+interface CIListView {
   view: IViewModel;
 }
 
-const ListView: FC<IListView> = ({ view }) => {
+const ListView: FC<CIListView> = ({ view }) => {
   const { collection, records } = useSelector(({
     collections: { collection},
     records: { records }

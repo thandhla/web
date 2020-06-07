@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-interface ICaution {
+interface CICaution {
   details: string;
   text: string;
 }
 
-const Caution = ({ details, text }: ICaution) => {
+const Caution: FC<CICaution> = ({ details, text }) => {
   const style = {
     cursor: 'pointer'
   };

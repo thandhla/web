@@ -11,8 +11,10 @@ import TextBoxField from '../molecules/TextBoxField/TextBoxField';
 import RelationField from '../molecules/RelationField/Container';
 */
 import Caution from '../atoms/Caution/Caution';
+import { ICollectionFields } from '../../types/database';
+import { IFieldComponent } from '../../types/components';
 
-function FieldFactory(props: any) {
+const FieldFactory = (props: any) => {
   switch (props.field.type) {
     case 'line':
       return <LineField { ...props } />;

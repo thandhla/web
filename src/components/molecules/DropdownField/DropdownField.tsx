@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
-//import Select from 'react-select';
+import React, { FC } from 'react';
 import { IFieldComponent } from '../../../types/components';
 import { IDropDownField } from '../../../types/database';
 
-interface IDropdownFieldComponent extends IFieldComponent {
+interface CIDropdownField extends IFieldComponent {
   field: IDropDownField;
 }
 
-function DropdownField({
+const DropdownField: FC<CIDropdownField> = ({
   field,
   data,
   edit,
@@ -15,7 +14,7 @@ function DropdownField({
   onFocus,
   onBlur,
   update
-}: IDropdownFieldComponent) {
+}) => {
   const initialOption = field.options.choices.find((option: any) => option.value === data);
 
   //if (!edit) {
