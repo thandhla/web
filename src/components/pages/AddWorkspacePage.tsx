@@ -25,7 +25,7 @@ const AddWorkspacePage: FC = () => {
       return;
     }
 
-    dispatch(createWorkspace(name));
+    dispatch(createWorkspace({ name }));
   };
 
   const onNameChange = (e:any) => {

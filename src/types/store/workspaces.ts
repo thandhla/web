@@ -25,7 +25,9 @@ export interface CreateWorkspaceStart {
 
 export interface CreateWorkspaceSuccess {
   type: IWorkspaceActionTypes.CREATE_WORKSPACE_SUCCESS;
-  workspace: IWorkspaceModel;
+  payload: {
+    workspace: IWorkspaceModel;
+  }
 }
 
 export interface GetWorkspacesStart {
@@ -34,7 +36,9 @@ export interface GetWorkspacesStart {
 
 export interface GetWorkspacesSuccess {
   type: IWorkspaceActionTypes.GET_WORKSPACES_SUCCESS;
-  workspaces: IWorkspaceModel[];
+  payload: {
+    workspaces: IWorkspaceModel[];
+  }
 }
 
 export interface GetWorkspaceStart {
@@ -43,7 +47,9 @@ export interface GetWorkspaceStart {
 
 export interface GetWorkspaceSuccess {
   type: IWorkspaceActionTypes.GET_WORKSPACE_SUCCESS;
-  workspace: IWorkspaceModel;
+  payload: {
+    workspace: IWorkspaceModel;
+  }
 }
 
 export interface IClearWorkspaces {

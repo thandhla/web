@@ -20,6 +20,7 @@ export default interface IRecordsState {
   isFetchingOne: boolean;
   isFetchingList: boolean;
   isCreating: boolean;
+  isNew: boolean;
   records: IRecordModel[];
   record: null | IRecordModel;
   query: IRecordsQuery;
@@ -42,7 +43,9 @@ export interface CreateRecordStart {
 
 export interface CreateRecordSuccess {
   type: IRecordActionTypes.CREATE_RECORD_SUCCESS;
-  record: IRecordModel;
+  payload: {
+    record: IRecordModel;
+  }
 }
 
 export interface GetRecordsStart {
@@ -51,7 +54,9 @@ export interface GetRecordsStart {
 
 export interface GetRecordsSuccess {
   type: IRecordActionTypes.GET_RECORDS_SUCCESS;
-  records: IRecordModel[];
+  payload: {
+    records: IRecordModel[];
+  }
 }
 
 export interface GetRecordStart {
@@ -60,7 +65,9 @@ export interface GetRecordStart {
 
 export interface GetRecordSuccess {
   type: IRecordActionTypes.GET_RECORD_SUCCESS;
-  record: IRecordModel;
+  payload: {
+    record: IRecordModel;
+  }
 }
 
 export interface ClearRecords {

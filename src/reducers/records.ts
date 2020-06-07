@@ -7,6 +7,7 @@ export const initialState: IRecordsState = {
   isFetchingOne: false,
   isFetchingList: false,
   isCreating: false,
+  isNew: false,
   records: [],
   record: null,
   query: {
@@ -28,8 +29,9 @@ export default (
     case types.CREATE_RECORD_SUCCESS: {
       return {
         ...state,
+        ...action.payload,
         isCreating: false,
-        record: action.record
+        isNew: true
       };
     }
 
@@ -42,8 +44,8 @@ export default (
     case types.GET_RECORDS_SUCCESS: {
       return {
         ...state,
-        isFetchingList: false,
-        records: action.records
+        ...action.payload,
+        isFetchingList: false
       };
     }
 
@@ -54,10 +56,12 @@ export default (
       };
     }
     case types.GET_RECORD_SUCCESS: {
+      console.log('get record')
       return {
         ...state,
+        ...action.payload,
         isFetchingOne: false,
-        record: action.record
+        isNew: false
       };
     }
 
@@ -71,7 +75,8 @@ export default (
     case types.CLEAR_RECORD: {
       return {
         ...state,
-        record: null
+        record: null,
+        isNew: false
       };
     }
 

@@ -14,7 +14,9 @@ import RootStore from '../types/store/root';
 
 const { ipcRenderer } = window.require("electron");
 
-export const createWorkspace = (name: string) => {
+export const createWorkspace = (workspace: {
+  name: string
+}) => {
   return (dispatch: Dispatch, getState: RootStore) => {
     const createWorkspaceStart: CreateWorkspaceStart = {
       type: types.CREATE_WORKSPACE_START
@@ -22,14 +24,13 @@ export const createWorkspace = (name: string) => {
     
     dispatch(createWorkspaceStart);
 
-    const queries = {
+    const response = ipcRenderer.sendSync('nbql', {
       workspace: {
         action: 'createWorkspace',
-        args: { name }
+        args: workspace
       }
-    };
-    const response = ipcRenderer.sendSync('nbql', [null, queries]);
-
+    });
+    
     if (response?.errors?.workspace) {
       console.log({ createWorkspaceError: response.errors.workspace });
       return;
@@ -37,7 +38,9 @@ export const createWorkspace = (name: string) => {
 
     const createWorkspaceSuccess: CreateWorkspaceSuccess = {
       type: types.CREATE_WORKSPACE_SUCCESS,
-      workspace: response.data.workspace 
+      payload: {
+        workspace: response.data.workspace
+      }
     };
     
     dispatch(createWorkspaceSuccess);
@@ -52,7 +55,7 @@ export const getWorkspaces = () => {
     
     dispatch(getWorkspacesStart);
     
-    const queries = {
+    const response = ipcRenderer.sendSync('nbql', {
       workspaces: {
         action: 'getWorkspaces'
       },
@@ -63,11 +66,12 @@ export const getWorkspaces = () => {
           payload: 'testo'
         }
       }
-    };
-    const response = ipcRenderer.sendSync('nbql', [null, queries]);
+    });
     const getWorkspacesSuccess: GetWorkspacesSuccess = {
       type: types.GET_WORKSPACES_SUCCESS,
-      workspaces: response.data.workspaces 
+      payload: {
+        workspaces: response.data.workspaces
+      }
     };
     
     dispatch(getWorkspacesSuccess);
@@ -82,16 +86,17 @@ export const getWorkspace = (id: string) => {
     
     dispatch(getWorkspaceStart);
     
-    const queries = {
+    const response = ipcRenderer.sendSync('nbql', {
       workspace: {
         action: 'getWorkspace',
         args: { id }
       }
-    };
-    const response = ipcRenderer.sendSync('nbql', [null, queries]);
+    });
     const getWorkspaceSuccess: GetWorkspaceSuccess = {
       type: types.GET_WORKSPACE_SUCCESS,
-      workspace: response.data.workspace
+      payload: {
+        workspace: response.data.workspace
+      }
     };
     
     dispatch(getWorkspaceSuccess);

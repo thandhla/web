@@ -6,9 +6,10 @@ import { useHistory } from 'react-router-dom';
 
 interface IListView {
   view: IViewModel;
+  newRecord: any;
 }
 
-const ListView: FC<IListView> = ({ view }) => {
+const ListView: FC<IListView> = ({ view, newRecord }) => {
   const history = useHistory();
   const { collection, records } = useSelector(({
     collections: { collection},
@@ -29,8 +30,6 @@ const ListView: FC<IListView> = ({ view }) => {
       fields.push(field);
     }
   }
-
-  const createRecord = (collectionId: string) => collectionId;
 
   const rowClicked = (recordId: string) => history.push({ search: `?r=${recordId}` });
   
@@ -58,7 +57,7 @@ const ListView: FC<IListView> = ({ view }) => {
         <tr>
           <td colSpan={fields.length}>
             <button
-              onClick={() => createRecord(collection.id)}
+              onClick={newRecord}
             >New</button>
           </td>
         </tr>

@@ -15,7 +15,8 @@ import IRootStore from '../types/store/root';
 const { ipcRenderer } = window.require("electron");
 
 export const createCollection = (collection: {
-  name: string
+  name: string,
+  workspaceId: string
 }) => {
   return (dispatch: Dispatch, getState: () => IRootStore) => {
     const createCollectionStart: CreateCollectionStart = {
@@ -24,19 +25,12 @@ export const createCollection = (collection: {
 
     dispatch(createCollectionStart);
     
-    const queries = {
+    const response = ipcRenderer.sendSync('nbql', {
       collection: {
         action: 'createCollection',
         args: collection
       }
-    };
-    const workspaceId = getState().workspaces.workspace?.id;
-
-    if (!workspaceId) {
-      return;
-    }
-
-    const response = ipcRenderer.sendSync('nbql', [workspaceId, queries]);
+    });
     
     if (response?.errors?.collection) {
       console.log({ collectionError: response.errors.collection });
@@ -45,7 +39,9 @@ export const createCollection = (collection: {
 
     const createCollectionSuccess: CreateCollectionSuccess = {
       type: types.CREATE_COLLECTION_SUCCESS,
-      collection: response.data.collection 
+      payload: {
+        collection: response.data.collection
+      }
     };
     
     dispatch(createCollectionSuccess);
@@ -60,25 +56,26 @@ export const getCollections = (workspaceId: string) => {
     
     dispatch(getCollectionsStart);
 
-    const queries = {
+    const response = ipcRenderer.sendSync('nbql', {
       collections: {
-        action: 'getCollections'
+        action: 'getCollections',
+        args: {
+          workspaceId
+        }
       }
-    };
-    const response = ipcRenderer.sendSync('nbql', [workspaceId, queries]);
+    });
     const getCollectionsSuccess: GetCollectionsSuccess = {
       type: types.GET_COLLECTIONS_SUCCESS,
-      collections: response.data.collections 
+      payload: {
+        collections: response.data.collections 
+      }
     };
     
     dispatch(getCollectionsSuccess);
   }
 }
 
-export const getCollection = (
-  { workspace: workspaceId, collection: collectionId }:
-  { workspace: string, collection: string }
-) => {
+export const getCollection = (collectionId: string) => {
   return (dispatch: Dispatch, getState: () => IRootStore) => {
     const getCollectionStart: GetCollectionStart = {
       type: types.GET_COLLECTION_START
@@ -86,13 +83,12 @@ export const getCollection = (
     
     dispatch(getCollectionStart);
     
-    const queries = {
+    const response = ipcRenderer.sendSync('nbql', {
       collection: {
         action: 'getCollection',
         args: { id: collectionId }
       }
-    };
-    const response = ipcRenderer.sendSync('nbql', [workspaceId, queries]);
+    });
     
     if (response?.errors?.collection) {
       console.log({ collectionError: response.errors.collection });
@@ -101,7 +97,9 @@ export const getCollection = (
 
     const getCollectionSuccess: GetCollectionSuccess = {
       type: types.GET_COLLECTION_SUCCESS,
-      collection: response.data.collection
+      payload: {
+        collection: response.data.collection
+      }
     };
     
     dispatch(getCollectionSuccess);

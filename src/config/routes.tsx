@@ -13,8 +13,8 @@ const routes = {
     add: '/create-workspace',
   },
   collections: {
-    read: '/w/:workspaceId/c/:collectionId/v/:viewId',
-    edit: '/w/:workspaceId/c/:collectionId/edit',
+    read: '/c/:collectionId/v/:viewId',
+    edit: '/c/:collectionId/edit',
     add: '/w/:workspaceId/create-collection',
   },
   records: {

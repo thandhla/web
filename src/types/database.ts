@@ -26,12 +26,14 @@ export interface ICollectionField {
 
 export interface IViewModel {
   id: string;
+  collectionId: string;
   type: IViewTypes;
   fields: string[];
 }
 
 export interface ICollectionModel {
   id: string;
+  workspaceId: string;
   name: string;
   defaultView: string;
   fields: ICollectionField[];
@@ -40,6 +42,6 @@ export interface ICollectionModel {
 
 export interface IRecordModel {
   id: string;
-  collection: string;
+  collectionId: string;
   fields: any;
 }

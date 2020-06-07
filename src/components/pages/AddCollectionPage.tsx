@@ -47,7 +47,7 @@ const AddCollectionPage: FC = () => {
       return;
     }
 
-    dispatch(createCollection({ name }));
+    dispatch(createCollection({ name, workspaceId }));
   };
 
   const onNameChange = (e:any) => {

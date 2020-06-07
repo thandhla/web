@@ -25,7 +25,9 @@ export interface CreateCollectionStart {
 
 export interface CreateCollectionSuccess {
   type: ICollectionActionTypes.CREATE_COLLECTION_SUCCESS;
-  collection: ICollectionModel;
+  payload: {
+    collection: ICollectionModel;
+  }
 }
 
 export interface GetCollectionsStart {
@@ -34,7 +36,9 @@ export interface GetCollectionsStart {
 
 export interface GetCollectionsSuccess {
   type: ICollectionActionTypes.GET_COLLECTIONS_SUCCESS;
-  collections: ICollectionModel[];
+  payload: {
+    collections: ICollectionModel[];
+  }
 }
 
 export interface GetCollectionStart {
@@ -43,7 +47,9 @@ export interface GetCollectionStart {
 
 export interface GetCollectionSuccess {
   type: ICollectionActionTypes.GET_COLLECTION_SUCCESS;
-  collection: ICollectionModel;
+  payload: {
+    collection: ICollectionModel;
+  }
 }
 
 export interface ClearCollections {

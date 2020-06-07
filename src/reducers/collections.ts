@@ -24,8 +24,8 @@ export default (
     case types.CREATE_COLLECTION_SUCCESS: {
       return {
         ...state,
-        isCreating: false,
-        collection: action.collection
+        ...action.payload,
+        isCreating: false
       };
     }
 
@@ -38,8 +38,8 @@ export default (
     case types.GET_COLLECTIONS_SUCCESS: {
       return {
         ...state,
+        ...action.payload,
         isFetchingList: false,
-        collections: action.collections
       };
     }
 
@@ -52,8 +52,8 @@ export default (
     case types.GET_COLLECTION_SUCCESS: {
       return {
         ...state,
-        isFetchingOne: false,
-        collection: action.collection
+        ...action.payload,
+        isFetchingOne: false
       };
     }
 

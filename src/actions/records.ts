@@ -15,9 +15,7 @@ import IRootStore from '../types/store/root';
 
 const { ipcRenderer } = window.require("electron");
 
-export const createRecord = (record: {
-  name: string
-}) => {
+export const createRecord = (workspaceId: string, collectionId: string) => {
   return (dispatch: Dispatch, getState: () => IRootStore) => {
     const createRecordStart: CreateRecordStart = {
       type: types.CREATE_RECORD_START
@@ -25,14 +23,14 @@ export const createRecord = (record: {
 
     dispatch(createRecordStart);
     
-    const queries = {
+    const response = ipcRenderer.sendSync('nbql', {
       record: {
         action: 'createRecord',
-        args: record
+        args: {
+          collectionId
+        }
       }
-    };
-    const workspaceId = getState().workspaces.workspace?.id;
-    const response = ipcRenderer.sendSync('nbql', [workspaceId, queries]);
+    });
     
     if (response?.errors?.record) {
       console.log({ recordError: response.errors.record });
@@ -41,14 +39,16 @@ export const createRecord = (record: {
 
     const createRecordSuccess: CreateRecordSuccess = {
       type: types.CREATE_RECORD_SUCCESS,
-      record: response.data.record 
+      payload: {
+        record: response.data.record
+      }
     };
     
     dispatch(createRecordSuccess);
   }
 }
 
-export const getRecords = (workspaceId: string, submitedQuery: IRecordsQuery) => {
+export const getRecords = (submitedQuery: IRecordsQuery) => {
   return (dispatch: Dispatch, getState: () => IRootStore) => {
     const getRecordsStart: GetRecordsStart = {
       type: types.GET_RECORDS_START
@@ -58,13 +58,12 @@ export const getRecords = (workspaceId: string, submitedQuery: IRecordsQuery) =>
 
     const { query } = getState().records;
     const updatedQuery = (submitedQuery === undefined) ? query : submitedQuery;
-    const queries = {
+    const response = ipcRenderer.sendSync('nbql', {
       records: {
         action: 'getRecords',
         args: updatedQuery
       }
-    };
-    const response = ipcRenderer.sendSync('nbql', [workspaceId, queries]);
+    });
 
     if (response?.errors?.records) {
       console.log({ recordsError: response.errors.records });
@@ -73,7 +72,9 @@ export const getRecords = (workspaceId: string, submitedQuery: IRecordsQuery) =>
 
     const getRecordsSuccess: GetRecordsSuccess = {
       type: types.GET_RECORDS_SUCCESS,
-      records: response.data.records 
+      payload: {
+        records: response.data.records
+      }
     };
     
     dispatch(getRecordsSuccess);
@@ -88,17 +89,12 @@ export const getRecord = (id: string) => {
     
     dispatch(getRecordStart);
     
-    const queries = {
+    const response = ipcRenderer.sendSync('nbql', {
       record: {
         action: 'getRecord',
         args: { id }
       }
-    };
-    const workspaceId = getState().workspaces.workspace?.id;
-    
-    if (!workspaceId) return;
-
-    const response = ipcRenderer.sendSync('nbql', [workspaceId, queries]);
+    });
     
     if (response?.errors?.record) {
       console.log({ recordError: response.errors.record });
@@ -107,7 +103,9 @@ export const getRecord = (id: string) => {
 
     const getRecordSuccess: GetRecordSuccess = {
       type: types.GET_RECORD_SUCCESS,
-      record: response.data.record
+      payload: {
+        record: response.data.record
+      }
     };
     
     dispatch(getRecordSuccess);

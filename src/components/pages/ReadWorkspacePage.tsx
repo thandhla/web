@@ -47,10 +47,7 @@ const ReadWorkspacePage: FC = () => {
       <ul>
         {collections.map((collection: ICollectionModel) =>
           <li key={collection.id}>
-            <Link to={url(routes.collections.read, {
-              workspaceId: workspace.id,
-              collectionId: collection.id,
-            })}>{collection.name}</Link>
+            <Link to={url(routes.collections.read, { collectionId: collection.id, })}>{collection.name}</Link>
           </li>
         )}
       </ul>

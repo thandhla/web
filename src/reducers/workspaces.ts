@@ -24,8 +24,8 @@ export default (
     case types.CREATE_WORKSPACE_SUCCESS: {
       return {
         ...state,
-        isCreating: false,
-        workspace: action.workspace
+        ...action.payload,
+        isCreating: false
       };
     }
 
@@ -38,8 +38,8 @@ export default (
     case types.GET_WORKSPACES_SUCCESS: {
       return {
         ...state,
-        isFetchingList: false,
-        workspaces: action.workspaces
+        ...action.payload,
+        isFetchingList: false
       };
     }
 
@@ -52,8 +52,8 @@ export default (
     case types.GET_WORKSPACE_SUCCESS: {
       return {
         ...state,
-        isFetchingOne: false,
-        workspace: action.workspace
+        ...action.payload,
+        isFetchingOne: false
       };
     }
 
