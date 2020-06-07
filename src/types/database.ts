@@ -29,6 +29,7 @@ export interface IViewModel {
   collectionId: string;
   type: IViewTypes;
   fields: string[];
+  options: any;
 }
 
 export interface ICollectionModel {

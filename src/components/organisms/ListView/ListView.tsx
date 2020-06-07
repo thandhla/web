@@ -1,16 +1,17 @@
 import React, { FC } from 'react';
 import IRootStore from '../../../types/store/root';
-import { ICollectionField, IViewModel } from '../../../types/database';
+import { ICollectionField, IViewModel, IRecordModel } from '../../../types/database';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import * as _ from "lodash";
+import ListGroups from './ListGroups';
+import ListRows from './ListRows';
 
 interface IListView {
   view: IViewModel;
-  newRecord: any;
 }
 
-const ListView: FC<IListView> = ({ view, newRecord }) => {
-  const history = useHistory();
+const ListView: FC<IListView> = ({ view }) => {
   const { collection, records } = useSelector(({
     collections: { collection},
     records: { records }
@@ -20,47 +21,34 @@ const ListView: FC<IListView> = ({ view, newRecord }) => {
     return <p>Loading....</p>
   }
 
-  const { fields: clFields } = collection;
-  const fields: ICollectionField[] = [];
+  const clFields = collection.fields;
+  const viewFields: ICollectionField[] = [];
   
   for (const viewField of view.fields) {
     const field = clFields.find((clField: ICollectionField) => clField.id === viewField);
 
     if (field) {
-      fields.push(field);
+      viewFields.push(field);
     }
   }
-
-  const rowClicked = (recordId: string) => history.push({ search: `?r=${recordId}` });
   
   return (
     <table>
       <thead>
         <tr>
-          {fields.map((field: ICollectionField, index: number) =>
+          {viewFields.map((viewField: ICollectionField, index: number) =>
             <th key={index}>
-              {field.label}
+              {viewField.label}
             </th>
           )}
         </tr>
       </thead>
       <tbody>
-        {records.map((record) =>
-          <tr key={record.id} onClick={() => rowClicked(record.id)}>
-            {fields.map((field: ICollectionField, index: number) =>
-              <td key={index}>
-                {record.fields[field.id]}
-              </td>
-            )}
-          </tr>
-        )}
-        <tr>
-          <td colSpan={fields.length}>
-            <button
-              onClick={newRecord}
-            >New</button>
-          </td>
-        </tr>
+        {view.options.groupBy ?
+          <ListGroups {...{ viewFields, records, by: view.options.groupBy }} />
+        :
+          <ListRows {...{ viewFields, records }} /> 
+        }
       </tbody>
     </table>
   );

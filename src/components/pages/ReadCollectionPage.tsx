@@ -81,15 +81,10 @@ const ReadCollectionPage: FC = () => {
     })} />
   }
 
-  const newRecord = () => {
-    dispatch(createRecord(workspace.id, collection.id));
-  };
-
   const selectedView = (type: IViewTypes) => {
-    const viewProps = { view , newRecord };
     switch (type) {
       case IViewTypes.list: {
-        return <ListView { ...viewProps } />
+        return <ListView view={view} />
       }
       
       default: {

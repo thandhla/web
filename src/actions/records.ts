@@ -15,7 +15,7 @@ import IRootStore from '../types/store/root';
 
 const { ipcRenderer } = window.require("electron");
 
-export const createRecord = (workspaceId: string, collectionId: string) => {
+export const createRecord = (collectionId: string) => {
   return (dispatch: Dispatch, getState: () => IRootStore) => {
     const createRecordStart: CreateRecordStart = {
       type: types.CREATE_RECORD_START
