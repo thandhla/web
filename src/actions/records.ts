@@ -10,6 +10,7 @@ import {
   ClearRecords,
   ClearRecord,
   IRecordsQuery,
+  SetSorting,
 } from '../types/store/records';
 import IRootStore from '../types/store/root';
 
@@ -73,7 +74,8 @@ export const getRecords = (submitedQuery: IRecordsQuery) => {
     const getRecordsSuccess: GetRecordsSuccess = {
       type: types.GET_RECORDS_SUCCESS,
       payload: {
-        records: response.data.records
+        records: response.data.records,
+        query: updatedQuery
       }
     };
     
@@ -129,5 +131,16 @@ export const clearRecord = () => {
     };
     
     dispatch(actionClearRecord);
+  }
+}
+
+export const setSorting = (isSorting: boolean) => {
+  return (dispatch: Dispatch) => {
+    const actionSetSorting: SetSorting = {
+      type: types.SET_SORTING,
+      payload: { isSorting }
+    };
+    
+    dispatch(actionSetSorting);
   }
 }

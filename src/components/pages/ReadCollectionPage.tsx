@@ -4,12 +4,13 @@ import IRootStore from '../../types/store/root';
 import { IViewModel, IViewTypes } from '../../types/database';
 import { getWorkspace, clearWorkspace } from '../../actions/workspaces';
 import { getCollection, clearCollection } from '../../actions/collections';
-import { getRecords, createRecord, clearRecords, clearRecord } from '../../actions/records';
+import { getRecords, clearRecords, clearRecord } from '../../actions/records';
 import routes from '../../config/routes';
 import url from '../../utils/url';
 import { Link, useParams, Redirect, useLocation, useHistory } from 'react-router-dom';
 import ListView from '../organisms/ListView';
 import RecordForm from '../organisms/RecordForm';
+import CollectionViewsTemplate from '../templates/CollectionViewsTemplate';
 
 const ReadCollectionPage: FC = () => {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ const ReadCollectionPage: FC = () => {
     if (collection && !recordsFetched) {
       setRecordsFetched(true);
       dispatch(getRecords({
-        collection: collection.id,
+        collectionId: collection.id,
         sorts: []
       }));
     }
@@ -94,21 +95,25 @@ const ReadCollectionPage: FC = () => {
   }
   
   return (
-    <div>
-      <div className="header-link">
-        <Link to={routes.home}>Workspaces</Link> >
-        <Link to={url(routes.workspaces.read, { workspaceId: workspace.id })}>{workspace.name}</Link>
-      </div>
-      <h1>{collection.name}</h1>
-      {view ?
-        selectedView(view.type)
-        :
-        <p>Loading...</p>
+    <CollectionViewsTemplate
+      breadcrumbs={
+        <>        
+          <Link to={routes.home}>Workspaces</Link> >
+          <Link to={url(routes.workspaces.read, { workspaceId: workspace.id })}>{workspace.name}</Link>
+        </>
       }
-      {recordSearchParam &&
-        <RecordForm record={recordSearchParam} />
-      }
-    </div>
+      header={collection.name}
+      view={view}
+    >
+    {view ?
+      selectedView(view.type)
+      :
+      <p>Loading...</p>
+    }
+    {recordSearchParam &&
+      <RecordForm record={recordSearchParam} />
+    }
+    </CollectionViewsTemplate>
   )
 };
 

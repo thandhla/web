@@ -45,6 +45,7 @@ export type ICollectionFields =
 export interface IViewModel {
   id: string;
   collectionId: string;
+  name: string;
   type: IViewTypes;
   fields: string[];
   options: any;

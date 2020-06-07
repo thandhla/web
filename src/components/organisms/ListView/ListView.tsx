@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import IRootStore from '../../../types/store/root';
-import { ICollectionField, IViewModel, IRecordModel } from '../../../types/database';
+import { ICollectionField, IViewModel } from '../../../types/database';
 import { useSelector } from 'react-redux';
 import ListGroups from './ListGroups';
 import ListRows from './ListRows';

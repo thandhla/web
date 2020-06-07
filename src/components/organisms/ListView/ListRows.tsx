@@ -9,8 +9,8 @@ export interface CIListRows {
 
 const ListRows: FC<CIListRows> = ({ viewFields, records }) => (
   <>
-    {records.map((record) =>
-      <tr key={record.id} onClick={() => ''/*rowClicked(record.id)*/}>
+    {records.map((record, index) =>
+      <tr key={index} onClick={() => ''/*rowClicked(record.id)*/}>
         {viewFields.map((viewfield, index) =>
           <td key={index}>
             <FieldFactory

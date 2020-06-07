@@ -8,11 +8,17 @@ export const initialState: IRecordsState = {
   isFetchingList: false,
   isCreating: false,
   isNew: false,
+  isSorting: false,
   records: [],
   record: null,
   query: {
-    collection: '',
-    sorts: [],
+    collectionId: '',
+    sorts: [
+      {
+        field: 'f1',
+        direction: 'desc'
+      }
+    ],
   }
 };
   
@@ -77,6 +83,13 @@ export default (
         ...state,
         record: null,
         isNew: false
+      };
+    }
+
+    case types.SET_SORTING: {
+      return {
+        ...state,
+        ...action.payload
       };
     }
 

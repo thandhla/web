@@ -1,13 +1,13 @@
 import React, { FC } from "react";
 import _ from "lodash";
 import { IRecordModel, IDropDownField } from "../../../types/database";
-import ListRows, { IListRows } from "./ListRows";
+import ListRows, { CIListRows } from "./ListRows";
 
 interface IRecordsGroup {
   [key: string]: IRecordModel[];
 }
 
-interface CIListGroups extends IListRows {
+interface CIListGroups extends CIListRows {
   by: string;
 }
 
@@ -27,7 +27,9 @@ const ListGroups: FC<CIListGroups> = ({ viewFields, records, by }) => {
 
     rowGroups.push(() => (
       <>
-        <td colSpan={viewFields.length}>{groupLabel}</td>
+        <tr>
+          <td colSpan={viewFields.length}>{groupLabel}</td>
+        </tr>
         <ListRows {...{ viewFields, records }} />
       </>
     ));

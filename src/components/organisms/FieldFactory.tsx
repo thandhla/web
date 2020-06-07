@@ -1,4 +1,5 @@
 import React from 'react';
+import Caution from '../atoms/Caution/Caution';
 import LineField from '../molecules/LineField';
 import DropdownField from '../molecules/DropdownField';
 /*
@@ -10,9 +11,6 @@ import MultiSelectField from '../molecules/MultiSelectField/MultiSelectField';
 import TextBoxField from '../molecules/TextBoxField/TextBoxField';
 import RelationField from '../molecules/RelationField/Container';
 */
-import Caution from '../atoms/Caution/Caution';
-import { ICollectionFields } from '../../types/database';
-import { IFieldComponent } from '../../types/components';
 
 const FieldFactory = (props: any) => {
   switch (props.field.type) {

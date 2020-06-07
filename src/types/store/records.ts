@@ -12,7 +12,7 @@ export interface IRecordsFilter {
 }
 
 export interface IRecordsQuery {
-  collection: string;
+  collectionId: string;
   sorts: IRecordsSort[];
 }
 
@@ -21,6 +21,7 @@ export default interface IRecordsState {
   isFetchingList: boolean;
   isCreating: boolean;
   isNew: boolean;
+  isSorting: boolean;
   records: IRecordModel[];
   record: null | IRecordModel;
   query: IRecordsQuery;
@@ -35,6 +36,7 @@ export enum IRecordActionTypes {
   GET_RECORD_SUCCESS = 'GET_RECORD_SUCCESS',
   CLEAR_RECORDS = 'CLEAR_RECORDS',
   CLEAR_RECORD = 'CLEAR_RECORD',
+  SET_SORTING = 'SET_SORTING',
 }
 
 export interface CreateRecordStart {
@@ -56,6 +58,7 @@ export interface GetRecordsSuccess {
   type: IRecordActionTypes.GET_RECORDS_SUCCESS;
   payload: {
     records: IRecordModel[];
+    query: IRecordsQuery;
   }
 }
 
@@ -78,6 +81,13 @@ export interface ClearRecord {
   type: IRecordActionTypes.CLEAR_RECORD;
 }
 
+export interface SetSorting {
+  type: IRecordActionTypes.SET_SORTING;
+  payload: {
+    isSorting: boolean;
+  }
+}
+
 export type IRecordsAction =
   | CreateRecordStart
   | CreateRecordSuccess
@@ -86,4 +96,5 @@ export type IRecordsAction =
   | GetRecordStart
   | GetRecordSuccess
   | ClearRecords
-  | ClearRecord;
+  | ClearRecord
+  | SetSorting;
