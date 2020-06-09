@@ -1,32 +1,41 @@
-import React from 'react';
-import { useParams } from "react-router";
+import React, { FC } from 'react';
 import Button from '../../atoms/Button/Button';
-import RecordSorter from '../RecordSorter';
+import RecordSorter from '../../molecules/RecordSorter';
+import RecordGroupDropdown from '../../molecules/RecordGroupDropdown';
 //import RecordFilter from '../../organisms/RecordFilter/Container';
 import { useSelector, useDispatch } from 'react-redux';
 import IRootStore from '../../../types/store/root';
 import { setSorting } from '../../../actions/records';
 
-const RecordActionsBar = (props: any) => {
+const RecordActionsBar: FC = () => {
   const dispatch = useDispatch();
-  const { viewId } = useParams();
-  const { isSorting, sorts } = useSelector(({
+  const { view, isSorting, sorts } = useSelector(({
+    views: { view },
     records: { isSorting, query: { sorts} }
-  }: IRootStore) => ({ isSorting, sorts }));
+  }: IRootStore) => ({ view, isSorting, sorts }));
   const style = {
     borderColor: 'black',
     fontWeight: 'bold'
   };
 
-  // todo: use viewId for view switcher
+  if (!view) {
+    return <div>Loading RecordActionsBar....</div>
+  }
+
+  const groupable = ['list'];
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div className="action-bar" style={{ display: 'flex' }}>
       <div style={{
         margin: '0px 10px 10px 0px',
         padding: '2.5px 5px'
-      }}>view: {viewId}</div>
-      <div>
+      }}>
+        view: {view.id}
+      </div>
+      {groupable.includes(view.type) &&
+        <RecordGroupDropdown />
+      }
+      <div className="record-sorts">
         <Button
           style={sorts.length > 0 ? style : {}}
           onClick={() => dispatch(setSorting(!isSorting))}

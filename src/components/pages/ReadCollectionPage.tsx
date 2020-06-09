@@ -1,10 +1,11 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import IRootStore from '../../types/store/root';
 import { IViewModel, IViewTypes } from '../../types/database';
 import { getWorkspace, clearWorkspace } from '../../actions/workspaces';
 import { getCollection, clearCollection } from '../../actions/collections';
 import { getRecords, clearRecords, clearRecord } from '../../actions/records';
+import { getView } from '../../actions/views';
 import routes from '../../config/routes';
 import url from '../../utils/url';
 import { Link, useParams, Redirect, useLocation, useHistory } from 'react-router-dom';
@@ -21,11 +22,38 @@ const ReadCollectionPage: FC = () => {
   const { collectionId, viewId } = useParams();
   const [collectionFetched, setCollectionFetched] = useState(false);
   const [recordsFetched, setRecordsFetched] = useState(false);
-  const { workspace, collection, records, record, isCreating, isNew } = useSelector(({
+  const {
+    workspace,
+    collection,
+    records, record,
+    isCreating,
+    isNew,
+    view
+  } = useSelector(({
     workspaces: { workspace },
     collections: { collection },
-    records: { records, record, isCreating, isNew }
-  }: IRootStore) => ({ workspace, collection, records, record, isCreating, isNew }));
+    records: { records, record, isCreating, isNew },
+    views: { views, view }
+  }: IRootStore) => ({
+    workspace,
+    collection,
+    records,
+    record,
+    isCreating,
+    isNew,
+    view,
+  }));
+  const viewExists = useCallback(
+    () => {
+      if (collection) {
+        const view = collection.views.find((view: IViewModel) => view.id === viewId);
+        return view ? true : false;
+      }
+
+      return false;
+    },
+    [viewId, collection]
+  );
   
   useEffect(() => {
     if (!collectionFetched) {
@@ -44,6 +72,9 @@ const ReadCollectionPage: FC = () => {
         sorts: []
       }));
     }
+    if (collection && viewExists() && !view) {
+      dispatch(getView(viewId));
+    }
   }, [
     dispatch,
     history,
@@ -57,7 +88,10 @@ const ReadCollectionPage: FC = () => {
     records,
     record,
     isCreating,
-    isNew
+    isNew,
+    viewId,
+    view,
+    viewExists
   ]);
 
   useEffect(() => {
@@ -73,23 +107,25 @@ const ReadCollectionPage: FC = () => {
     return <div>Loading ReadCollectionPage....</div>
   }
 
-  const view = collection.views.find((view: IViewModel) => view.id === viewId);
-
-  if (!view) {
+  if (!viewExists()) {
     return <Redirect to={url(routes.collections.read, {
       collectionId: collection.id,
       viewId: collection.defaultView
     })} />
   }
 
-  const selectedView = (type: IViewTypes) => {
-    switch (type) {
+  const selectedView = () => {
+    if (!view) {
+      return <div>Loading view....</div>
+    }
+
+    switch (view.type) {
       case IViewTypes.list: {
         return <ListView view={view} />
       }
       
       default: {
-        return <p style={{ color: 'red' }}>Unknown view type: {type}</p>
+        return <p style={{ color: 'red' }}>Unknown view type: {view.type}</p>
       }
     }
   }
@@ -105,11 +141,7 @@ const ReadCollectionPage: FC = () => {
       header={collection.name}
       view={view}
     >
-    {view ?
-      selectedView(view.type)
-      :
-      <p>Loading...</p>
-    }
+    {selectedView()}
     {recordSearchParam &&
       <RecordForm record={recordSearchParam} />
     }

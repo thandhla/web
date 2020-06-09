@@ -33,7 +33,6 @@ const Sort = ({ index, sort, fieldOptions, directionOptions, updateSorts, delete
             <option
               key={index}
               value={option.value}
-              onChange={() => ''}
             >{option.label}</option>
           )}
         </select>

@@ -55,7 +55,7 @@ const RecordSorter = () => {
   }
 
   return (
-    <div>
+    <div className="record-sorts">
       <Card
         header={() => <div>Sort</div>}
        >
