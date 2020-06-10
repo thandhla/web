@@ -2,6 +2,7 @@ import React from 'react';
 import Caution from '../atoms/Caution/Caution';
 import LineField from '../molecules/LineField';
 import DropdownField from '../molecules/DropdownField';
+import RelationField from '../molecules/RelationField';
 /*
 import EmailField from '../molecules/EmailField/EmailField';
 import LinkField from '../molecules/LinkField/LinkField';
@@ -9,7 +10,6 @@ import NumberField from '../molecules/NumberField/NumberField';
 import DateField from '../molecules/DateField/DateField';
 import MultiSelectField from '../molecules/MultiSelectField/MultiSelectField';
 import TextBoxField from '../molecules/TextBoxField/TextBoxField';
-import RelationField from '../molecules/RelationField/Container';
 */
 
 const FieldFactory = (props: any) => {
@@ -18,6 +18,8 @@ const FieldFactory = (props: any) => {
       return <LineField { ...props } />;
     case 'dropdown':
       return <DropdownField { ...props } />;
+    case 'relation':
+      return <RelationField { ...props } />;
     /*
     case 'email':
       return <EmailField { ...props } />;
@@ -31,8 +33,6 @@ const FieldFactory = (props: any) => {
       return <MultiSelectField { ...props } />;
     case 'textbox':
       return <TextBoxField { ...props } />;
-    case 'relation':
-      return <RelationField { ...props } />;
     */
     default:
       return (

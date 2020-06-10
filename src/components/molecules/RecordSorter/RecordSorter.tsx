@@ -4,15 +4,20 @@ import Card from '../../atoms/Card';
 import Sort from './Sort';
 import { useSelector, useDispatch } from 'react-redux';
 import IRootStore from '../../../types/store/root';
-import { getRecords } from '../../../actions/records';
+import { getRecords, setSorting } from '../../../actions/records';
 
 const RecordSorter = () => {
   const dispatch = useDispatch();
-  const { collection, query } = useSelector(({
+  const { collection, query, isSorting } = useSelector(({
     collections: { collection },
-    records: { query }
-  }: IRootStore) => ({ collection, query }));
+    views: { view },
+    records: { query, isSorting }
+  }: IRootStore) => ({ collection, query, isSorting }));
   const { sorts } = query;
+  const style = {
+    borderColor: 'black',
+    fontWeight: 'bold'
+  };
 
   if (!collection) {
     return <div>Loading...</div>
@@ -55,25 +60,36 @@ const RecordSorter = () => {
   }
 
   return (
-    <div className="record-sorts">
-      <Card
-        header={() => <div>Sort</div>}
-       >
-        {query.sorts.map((sort: any, index: number) =>
-          <Sort
-            key={index}
-            {...{
-              index,
-              sort,
-              fieldOptions,
-              directionOptions,
-              updateSorts,
-              deleteSort,
-            }}
-          />
-        )}
-        <Button onClick={addSort}>Add a sort</Button>
-      </Card>
+    <div className="record-sorts" style={{
+      margin: '0px 10px 10px 0px',
+      padding: '2.5px 5px'
+    }}>
+      <Button
+        style={sorts.length > 0 ? style : {}}
+        onClick={() => dispatch(setSorting(!isSorting))}
+      >Sort</Button>
+      {isSorting &&
+        <div className="record-sorts-dropdown">
+          <Card
+            header={() => <div>Sort</div>}
+          >
+            {query.sorts.map((sort: any, index: number) =>
+              <Sort
+                key={index}
+                {...{
+                  index,
+                  sort,
+                  fieldOptions,
+                  directionOptions,
+                  updateSorts,
+                  deleteSort,
+                }}
+              />
+            )}
+            <Button onClick={addSort}>Add a sort</Button>
+          </Card>
+        </div>
+      }
     </div>
   )
 }

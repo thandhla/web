@@ -67,7 +67,7 @@ export const getCollections = (workspaceId: string) => {
     const getCollectionsSuccess: GetCollectionsSuccess = {
       type: types.GET_COLLECTIONS_SUCCESS,
       payload: {
-        collections: response.data.collections 
+        collections: response.data.collections,
       }
     };
     
@@ -95,11 +95,11 @@ export const getCollection = (collectionId: string) => {
       return;
     }
 
+    const { item: collection, related: relatedCollections } = response.data.collection;
+
     const getCollectionSuccess: GetCollectionSuccess = {
       type: types.GET_COLLECTION_SUCCESS,
-      payload: {
-        collection: response.data.collection
-      }
+      payload: { collection, relatedCollections }
     };
     
     dispatch(getCollectionSuccess);

@@ -4,6 +4,7 @@ export default interface ICollectionsState {
   isFetchingOne: boolean,
   isFetchingList: boolean,
   isCreating: boolean,
+  relatedCollections: ICollectionModel[],
   collections: ICollectionModel[],
   collection: null | ICollectionModel,
 }
@@ -49,6 +50,7 @@ export interface GetCollectionSuccess {
   type: ICollectionActionTypes.GET_COLLECTION_SUCCESS;
   payload: {
     collection: ICollectionModel;
+    relatedCollections: ICollectionModel[];
   }
 }
 

@@ -11,14 +11,11 @@ export const initialState: IRecordsState = {
   isSorting: false,
   records: [],
   record: null,
+  relatedToRecords: [],
+  relatedToRecord: [],
   query: {
     collectionId: '',
-    sorts: [
-      {
-        field: 'f1',
-        direction: 'desc'
-      }
-    ],
+    sorts: [],
   }
 };
   
@@ -62,7 +59,6 @@ export default (
       };
     }
     case types.GET_RECORD_SUCCESS: {
-      console.log('get record')
       return {
         ...state,
         ...action.payload,
@@ -74,14 +70,16 @@ export default (
     case types.CLEAR_RECORDS: {
       return {
         ...state,
-        records: []
+        records: [],
+        relatedToRecords: [],
       };
     }
-
+    
     case types.CLEAR_RECORD: {
       return {
         ...state,
         record: null,
+        relatedToRecord: [],
         isNew: false
       };
     }

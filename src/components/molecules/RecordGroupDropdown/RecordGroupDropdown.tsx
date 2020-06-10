@@ -11,12 +11,17 @@ const RecordGroupDropdown: FC = () => {
     views: { view }
   }: IRootStore) => ({ collection, view }));
   const [showGroupBy, setShowGroupBy] = useState(false);
-  const groupable = ['dropdown'];
-
+  
   if (!collection || !view) {
     return <div>Loading RecordGroupDropdown....</div>
   }
-
+  
+  const style = {
+    borderColor: 'black',
+    fontWeight: 'bold'
+  };
+  
+  const groupable = ['dropdown'];
   const fields = collection.fields.filter((field) => groupable.includes(field.type));
   const fieldOptions = fields.map((field) => ({value: field.id, label: field.label }));
   const updateGroupField = (field: string) => {
@@ -32,8 +37,12 @@ const RecordGroupDropdown: FC = () => {
   }
 
   return (
-    <div className="record-group">
+    <div className="record-group" style={{
+      margin: '0px 10px 10px 0px',
+      padding: '2.5px 5px'
+    }}>
       <Button
+        style={selectedOption ? style : {}}
         onClick={() => setShowGroupBy(!showGroupBy)}
       >Group by: {selectedOption ? selectedOption.label : 'None'}</Button>
       {showGroupBy &&

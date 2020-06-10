@@ -24,6 +24,8 @@ export default interface IRecordsState {
   isSorting: boolean;
   records: IRecordModel[];
   record: null | IRecordModel;
+  relatedToRecords: IRecordModel[],
+  relatedToRecord: IRecordModel[],
   query: IRecordsQuery;
 }
 
@@ -57,8 +59,9 @@ export interface GetRecordsStart {
 export interface GetRecordsSuccess {
   type: IRecordActionTypes.GET_RECORDS_SUCCESS;
   payload: {
-    records: IRecordModel[];
     query: IRecordsQuery;
+    records: IRecordModel[];
+    relatedToRecords: IRecordModel[];
   }
 }
 

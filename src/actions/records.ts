@@ -57,12 +57,12 @@ export const getRecords = (submitedQuery: IRecordsQuery) => {
     
     dispatch(getRecordsStart);
 
-    const { query } = getState().records;
-    const updatedQuery = (submitedQuery === undefined) ? query : submitedQuery;
+    const { query: currentQuery } = getState().records;
+    const query = (submitedQuery === undefined) ? currentQuery : submitedQuery;
     const response = ipcRenderer.sendSync('nbql', {
       records: {
         action: 'getRecords',
-        args: updatedQuery
+        args: query
       }
     });
 
@@ -71,12 +71,11 @@ export const getRecords = (submitedQuery: IRecordsQuery) => {
       return;
     }
 
+    const { items: records, related: relatedToRecords } = response.data.records;
+
     const getRecordsSuccess: GetRecordsSuccess = {
       type: types.GET_RECORDS_SUCCESS,
-      payload: {
-        records: response.data.records,
-        query: updatedQuery
-      }
+      payload: { query, records, relatedToRecords }
     };
     
     dispatch(getRecordsSuccess);

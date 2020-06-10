@@ -26,6 +26,11 @@ export interface ICollectionField {
   id: string;
   label: string;
   type: IFieldTypes;
+  options: any;
+}
+
+export interface ILineField extends ICollectionField {
+  options: null;
 }
 
 export interface IDropDownField extends ICollectionField {
@@ -34,8 +39,11 @@ export interface IDropDownField extends ICollectionField {
   };
 }
 
-export interface ILineField extends ICollectionField {
-  options: null;
+export interface IRelationField extends ICollectionField {
+  options: {
+    collectionId: string;
+    fieldId: string;
+  };
 }
 
 export type ICollectionFields = 
@@ -45,7 +53,7 @@ export type ICollectionFields =
 export interface IViewModel {
   id: string;
   collectionId: string;
-  name: string;
+  title: string;
   type: IViewTypes;
   fields: string[];
   options: any;
@@ -57,6 +65,7 @@ export interface ICollectionModel {
   name: string;
   defaultView: string;
   fields: ICollectionField[];
+  titleField: string;
   views: IViewModel[];
 }
 

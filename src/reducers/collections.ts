@@ -8,6 +8,7 @@ export const initialState: ICollectionsState = {
   isFetchingList: false,
   isCreating: false,
   collections: [],
+  relatedCollections: [],
   collection: null,
 };
   
@@ -67,7 +68,8 @@ export default (
     case types.CLEAR_COLLECTION: {
       return {
         ...state,
-        collection: null
+        collection: null,
+        relatedCollections: []
       };
     }
 
