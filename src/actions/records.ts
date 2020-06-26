@@ -62,7 +62,10 @@ export const getRecords = (submitedQuery: IRecordsQuery) => {
     const response = ipcRenderer.sendSync('nbql', {
       records: {
         action: 'getRecords',
-        args: query
+        args: {
+          ...query,
+          related: true
+        }
       }
     });
 

@@ -6,6 +6,10 @@ table, th, td {
   border: 1px solid black;
 }
 
+tbody > tr:not(.no-hover):hover {
+  background-color: #eee;
+}
+
 th, td {
   padding: 10px;
 }

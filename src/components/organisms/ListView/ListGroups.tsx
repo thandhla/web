@@ -12,23 +12,29 @@ interface CIListGroups extends CIListRows {
 }
 
 const ListGroups: FC<CIListGroups> = ({ viewFields, records, by }) => {
-  const groups = _.groupBy(records, `fields.${by}`);
+  let rawGroups = _.groupBy(records, `fields.${by}`);
+  delete rawGroups.null;
+  delete rawGroups.undefined;
+
   const field: IDropDownField = viewFields.find((viewField) => viewField.id === by);
+  const groupWithValueEmpty = records.filter((record) => !record.fields[field.id]);
+  const emptyChoice = {
+    value: 'empty',
+    label: `No ${field.label}`
+  };
+  const hasEmpty: boolean = groupWithValueEmpty.length > 0;
+
+  const choices = hasEmpty ? [ emptyChoice, ...field.options.choices ] : field.options.choices;
+  const groups = hasEmpty ? { empty: groupWithValueEmpty, ...rawGroups } : rawGroups;
   let rowGroups = [];
 
-  for (const key in groups) {
-    const records = groups[key];
-    const choice = field.options.choices.find((choice) => choice.value === key);
-    let groupLabel: string;
-    
-    if (choice) {
-      groupLabel = choice.label;
-    }
+  for (const choice of choices) {
+    const records = groups[choice.value];
 
     rowGroups.push(() => (
       <>
-        <tr>
-          <td colSpan={viewFields.length}>{groupLabel}</td>
+        <tr className="no-hover">
+          <td colSpan={viewFields.length}>{choice.label}</td>
         </tr>
         <ListRows {...{ viewFields, records }} />
       </>
