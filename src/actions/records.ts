@@ -11,8 +11,11 @@ import {
   ClearRecord,
   IRecordsQuery,
   SetSorting,
+  UpdateRecordStart,
+  UpdateRecordSuccess,
 } from '../types/store/records';
 import IRootStore from '../types/store/root';
+import { IRecordModel } from '../types/database';
 
 const { ipcRenderer } = window.require("electron");
 
@@ -113,6 +116,34 @@ export const getRecord = (id: string) => {
     };
     
     dispatch(getRecordSuccess);
+  }
+}
+
+export const updateRecord = (record: IRecordModel) => {
+  return (dispatch: Dispatch) => {
+    const updateRecordStart: UpdateRecordStart = {
+      type: types.UPDATE_RECORD_START
+    };
+
+    dispatch(updateRecordStart);
+    
+    const response = ipcRenderer.sendSync('nbql', {
+      record: {
+        action: 'updateRecord',
+        args: record
+      }
+    });
+    
+    if (response?.errors?.record) {
+      console.log({ recordError: response.errors.record });
+      return;
+    }
+
+    const updateRecordSuccess: UpdateRecordSuccess = {
+      type: types.UPDATE_RECORD_SUCCESS
+    };
+    
+    dispatch(updateRecordSuccess);
   }
 }
 

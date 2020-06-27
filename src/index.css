@@ -8,6 +8,7 @@ table, th, td {
 
 tbody > tr:not(.no-hover):hover {
   background-color: #eee;
+  cursor: pointer;
 }
 
 th, td {
