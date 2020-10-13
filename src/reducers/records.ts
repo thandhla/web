@@ -7,6 +7,8 @@ export const initialState: IRecordsState = {
   isFetchingOne: false,
   isFetchingList: false,
   isCreating: false,
+  isUpdating: false,
+  isSynced: true,
   isNew: false,
   isSorting: false,
   records: [],
@@ -48,7 +50,8 @@ export default (
       return {
         ...state,
         ...action.payload,
-        isFetchingList: false
+        isFetchingList: false,
+        isSynced: true
       };
     }
 
@@ -64,6 +67,20 @@ export default (
         ...action.payload,
         isFetchingOne: false,
         isNew: false
+      };
+    }
+
+    case types.UPDATE_RECORD_START: {
+      return {
+        ...state,
+        isUpdating: true
+      };
+    }
+    case types.UPDATE_RECORD_SUCCESS: {
+      return {
+        ...state,
+        isUpdating: false,
+        isSynced: false
       };
     }
 

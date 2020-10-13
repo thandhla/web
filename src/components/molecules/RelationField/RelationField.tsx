@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import Caution from '../../atoms/Caution/Caution';
 import RelationPreview from './RelationPreview';
-import RelationDropDown from './RelationDropDown/Container';
 import { IFieldComponent } from '../../../types/components';
 import { IRelationField } from '../../../types/database';
 import { useSelector } from 'react-redux';

@@ -6,18 +6,18 @@ import Card from '../../atoms/Card';
 import recordTemplate from '../../../utils/recordTemplate';
 import RecordField from './RecordField';
 import { IRecordModel } from '../../../types/database';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 interface CIRecordForm {
-  record: string;
+  recordId: string;
 }
 
-const RecordForm: FC<CIRecordForm> = ({ record: recordId }) => {
+const RecordForm: FC<CIRecordForm> = ({ recordId }) => {
   const dispatch = useDispatch();
-  const { collection, record: initialRecord, isNew } = useSelector(({
+  const { collection, record: rawRecord, isSynced, isNew } = useSelector(({
     collections: { collection },
-    records: { record, isNew }
-  }: IRootStore) => ({ collection, record, isNew }));
+    records: { record, isSynced, isNew }
+  }: IRootStore) => ({ collection, record, isSynced, isNew }));
   const emptyRecord: IRecordModel = {
     id: '',
     collectionId: '',
@@ -26,6 +26,7 @@ const RecordForm: FC<CIRecordForm> = ({ record: recordId }) => {
   const history = useHistory();
   const [recordFetched, setRecordFetched] = useState(false);
   const [record, editRecord] = useState(emptyRecord);
+  const [cleanRecord, setCleanRecord] = useState(emptyRecord);
   
   useEffect(() => {
     if (!recordFetched) {
@@ -34,13 +35,23 @@ const RecordForm: FC<CIRecordForm> = ({ record: recordId }) => {
     }
 
     if (collection && recordFetched) {
-      editRecord(recordTemplate(collection.fields, initialRecord));
+      const formRecord = recordTemplate(collection.fields, rawRecord)
+      setCleanRecord(formRecord);
+      editRecord(formRecord);
     }
-  }, [dispatch, recordId, initialRecord, recordFetched, collection]);
+  }, [dispatch, recordId, rawRecord, recordFetched, collection]);
 
-  if (!collection || !initialRecord) {
+  useEffect(() => {
+    if (!isSynced) {
+      history.push({ search: '' });
+    }
+  }, [isSynced, history]);
+
+  if (!collection || !rawRecord) {
     return <div>Loading RecordForm....</div>
   }
+
+  const formIsDirty = JSON.stringify(cleanRecord.fields) !== JSON.stringify(record.fields);
 
   const cancelEditing = () => {
     dispatch(clearRecord());
@@ -55,9 +66,8 @@ const RecordForm: FC<CIRecordForm> = ({ record: recordId }) => {
   }
 
   const submitRecord = () => {
-    //todo: clear record and redirect back to collection if changes we're sucessfull 
-    //dispatch(updateRecord(record));
-  };
+    dispatch(updateRecord(record));
+  }
   
   return (
     <Card
@@ -72,11 +82,30 @@ const RecordForm: FC<CIRecordForm> = ({ record: recordId }) => {
           style={{ marginRight: "10px" }}
           onClick={() => cancelEditing()}
         >Cancel</button>
-        {/* todo: use singular for add button update button */}
-        <button
-          className="btn btn-primary"
-          onClick={submitRecord}
-        >{isNew ? 'Add ' + collection.name : 'Update' + collection.name}</button>
+        {isNew ?
+          <>
+            <button
+              className="btn btn-primary"
+              onClick={submitRecord}
+            >Add</button>
+          </>
+          :
+          <>
+            {formIsDirty &&
+              <>
+                <button
+                  className="btn"
+                  style={{ marginRight: "10px" }}
+                  onClick={() => editRecord(cleanRecord)}
+                >Undo changes</button>
+                <button
+                  className="btn btn-primary"
+                  onClick={submitRecord}
+                >Update</button>
+              </>
+            }
+          </>
+        }
       </div>
       <p style={{ color: '#555' }}>{`Record ID: ${record.id}`}</p>
       {collection.fields.map((collectionField) =>
@@ -84,11 +113,23 @@ const RecordForm: FC<CIRecordForm> = ({ record: recordId }) => {
           key={collectionField.id}
           field={collectionField}
           data={record.fields[collectionField.id]}
-          update={updateField}
+          update={(value: any) => updateField(collectionField.id, value)}
         />
       )}
     </Card>
   )
 };
 
-export default RecordForm;
+const RecordFormWrapper: FC = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const recordId = searchParams.get('r');
+
+  if (!recordId) {
+    return <></>
+  }
+
+  return <RecordForm recordId={recordId} />
+}
+
+export default RecordFormWrapper;

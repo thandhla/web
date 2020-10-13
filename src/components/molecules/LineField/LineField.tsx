@@ -16,7 +16,7 @@ const LineField: FC<CILineField> = ({
   update
 }) => {
   const onChange = (e: any) => {
-    update(field.id, e.target.value);
+    update(e.target.value);
   }
 
   if (!edit) {

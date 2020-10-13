@@ -52,7 +52,7 @@ export const createRecord = (collectionId: string) => {
   }
 }
 
-export const getRecords = (submitedQuery: IRecordsQuery) => {
+export const getRecords = (submitedQuery?: IRecordsQuery) => {
   return (dispatch: Dispatch, getState: () => IRootStore) => {
     const getRecordsStart: GetRecordsStart = {
       type: types.GET_RECORDS_START

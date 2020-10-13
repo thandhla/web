@@ -20,6 +20,8 @@ export default interface IRecordsState {
   isFetchingOne: boolean;
   isFetchingList: boolean;
   isCreating: boolean;
+  isUpdating: boolean;
+  isSynced: boolean;
   isNew: boolean;
   isSorting: boolean;
   records: IRecordModel[];
