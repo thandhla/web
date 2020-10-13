@@ -17,7 +17,7 @@ export enum IFieldTypes {
   line = 'line'
 }
 
-export interface IDropDownFieldChoices {
+export interface IDropDownFieldChoice {
   value: string;
   label: string
 }
@@ -35,7 +35,7 @@ export interface ILineField extends ICollectionField {
 
 export interface IDropDownField extends ICollectionField {
   options: {
-    choices: IDropDownFieldChoices[]
+    choices: IDropDownFieldChoice[]
   };
 }
 

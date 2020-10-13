@@ -4,7 +4,7 @@ import { ICollectionField, IViewModel } from '../../../types/database';
 import { useSelector } from 'react-redux';
 import ListGroups from './ListGroups';
 import ListRows from './ListRows';
-import FieldWidget from '../FieldWidget.tsx';
+import FieldWidget from '../FieldWidget';
 
 interface CIListView {
   view: IViewModel;

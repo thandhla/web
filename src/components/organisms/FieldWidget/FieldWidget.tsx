@@ -4,11 +4,12 @@ import { fieldIcon } from '../../../utils/icons'
 
 interface CIFieldWidget {
   field: ICollectionField;
+  style?: any;
 }
 
-const FieldWidget: FC<CIFieldWidget> = ({ field }) => {
+const FieldWidget: FC<CIFieldWidget> = ({ field, style = {} }) => {
   return (
-    <div>
+    <div style={style}>
       <span className="icon">{fieldIcon(field.type)}</span> {field.label}
     </div>
   )

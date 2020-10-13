@@ -20,6 +20,8 @@ export default interface IRecordsState {
   isFetchingOne: boolean;
   isFetchingList: boolean;
   isCreating: boolean;
+  isUpdating: boolean;
+  isSynced: boolean;
   isNew: boolean;
   isSorting: boolean;
   records: IRecordModel[];
@@ -36,6 +38,8 @@ export enum IRecordActionTypes {
   GET_RECORDS_SUCCESS = 'GET_RECORDS_SUCCESS',
   GET_RECORD_START = 'GET_RECORD_START',
   GET_RECORD_SUCCESS = 'GET_RECORD_SUCCESS',
+  UPDATE_RECORD_START = 'UPDATE_RECORD_START',
+  UPDATE_RECORD_SUCCESS = 'UPDATE_RECORD_SUCCESS',
   CLEAR_RECORDS = 'CLEAR_RECORDS',
   CLEAR_RECORD = 'CLEAR_RECORD',
   SET_SORTING = 'SET_SORTING',
@@ -76,6 +80,14 @@ export interface GetRecordSuccess {
   }
 }
 
+export interface UpdateRecordStart {
+  type: IRecordActionTypes.UPDATE_RECORD_START;
+}
+
+export interface UpdateRecordSuccess {
+  type: IRecordActionTypes.UPDATE_RECORD_SUCCESS;
+}
+
 export interface ClearRecords {
   type: IRecordActionTypes.CLEAR_RECORDS;
 }
@@ -98,6 +110,8 @@ export type IRecordsAction =
   | GetRecordsSuccess
   | GetRecordStart
   | GetRecordSuccess
+  | UpdateRecordStart
+  | UpdateRecordSuccess
   | ClearRecords
   | ClearRecord
   | SetSorting;

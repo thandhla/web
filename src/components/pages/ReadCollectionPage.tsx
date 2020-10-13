@@ -8,17 +8,12 @@ import { getRecords, clearRecords, clearRecord } from '../../actions/records';
 import { getView } from '../../actions/views';
 import routes from '../../config/routes';
 import url from '../../utils/url';
-import { Link, useParams, Redirect, useLocation, useHistory } from 'react-router-dom';
+import { Link, useParams, Redirect } from 'react-router-dom';
 import ListView from '../organisms/ListView';
-import RecordForm from '../organisms/RecordForm';
-import CollectionViewsTemplate from '../templates/CollectionViewsTemplate';
+import BrowseRecordsTemplate from '../templates/BrowseRecordsTemplate';
 
 const ReadCollectionPage: FC = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const recordSearchParam = searchParams.get('r');
   const { collectionId, viewId } = useParams();
   const [collectionFetched, setCollectionFetched] = useState(false);
   const [recordsFetched, setRecordsFetched] = useState(false);
@@ -27,12 +22,13 @@ const ReadCollectionPage: FC = () => {
     collection,
     records, record,
     isCreating,
+    isSynced,
     isNew,
     view
   } = useSelector(({
     workspaces: { workspace },
     collections: { collection },
-    records: { records, record, isCreating, isNew },
+    records: { records, record, isCreating, isSynced, isNew },
     views: { views, view }
   }: IRootStore) => ({
     workspace,
@@ -40,9 +36,11 @@ const ReadCollectionPage: FC = () => {
     records,
     record,
     isCreating,
+    isSynced,
     isNew,
     view,
   }));
+
   const viewExists = useCallback(
     () => {
       if (collection) {
@@ -77,9 +75,6 @@ const ReadCollectionPage: FC = () => {
     }
   }, [
     dispatch,
-    history,
-    location,
-    recordSearchParam,
     collectionId,
     collectionFetched,
     recordsFetched,
@@ -93,6 +88,12 @@ const ReadCollectionPage: FC = () => {
     view,
     viewExists
   ]);
+
+  useEffect(() => {
+    if (!isSynced) {
+      dispatch(getRecords());
+    }
+  }, [isSynced, dispatch]);
 
   useEffect(() => {
     return () => {
@@ -131,7 +132,7 @@ const ReadCollectionPage: FC = () => {
   }
   
   return (
-    <CollectionViewsTemplate
+    <BrowseRecordsTemplate
       breadcrumbs={
         <>        
           <Link to={routes.home}>Workspaces</Link> >
@@ -141,11 +142,8 @@ const ReadCollectionPage: FC = () => {
       header={collection.name}
       view={view}
     >
-    {selectedView()}
-    {recordSearchParam &&
-      <RecordForm record={recordSearchParam} />
-    }
-    </CollectionViewsTemplate>
+      {selectedView()}
+    </BrowseRecordsTemplate>
   )
 };
 
