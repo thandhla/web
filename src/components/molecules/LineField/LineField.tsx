@@ -29,8 +29,8 @@ const LineField: FC<CILineField> = ({
       value={data || ''}
       style={style}
       onChange={onChange}
-      onFocus={() => onFocus()}
-      onBlur={() => onBlur()}
+      onFocus={onFocus}
+      onBlur={onBlur}
     />
   )
 }

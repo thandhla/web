@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import Caution from '../../atoms/Caution/Caution';
 import RelationPreview from './RelationPreview';
+import RelationDropDown from './RelationDropDown';
 import { IFieldComponent } from '../../../types/components';
 import { IRelationField } from '../../../types/database';
 import { useSelector } from 'react-redux';
@@ -41,12 +42,6 @@ const RelationField: FC<CIRelationField> = ({
   });
 
   if (!relatedField) {
-    relatedField = relatedCollection.fields.find((field) => {
-      return field.id === relatedCollection.titleField;
-    });
-  }
-
-  if (!relatedField) {
     return (
       <Caution
         details="Collection field not found"
@@ -59,24 +54,23 @@ const RelationField: FC<CIRelationField> = ({
     return <RelationPreview field={relatedField} recordIds={data || []} />
   }
 
-  return <div>Edit relation</div>
-  /*  
-  const onChange = selectedOptions => {
-    const updateVaue = selectedOptions ? selectedOptions.map((option) => option.value) : [];
-    update(recordField.id, updateVaue);
+  const onChange = (selectedOptions: any) => {
+    const updateVaue = selectedOptions ? selectedOptions.map((option: any) => option.value) : [];
+    update(updateVaue);
   }
 
   return (
     <RelationDropDown {...{
+      reffField: recordField.options.fieldId,
+      collection: relatedCollection,
       data,
-      collection,
-      records,
       style,
+      onFocus,
+      onBlur,
       onChange,
       update
     }} />
   )
-  */
 }
 
 export default RelationField;

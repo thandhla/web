@@ -32,8 +32,8 @@ const DropdownField: FC<CIDropdownField> = ({
         value={initialOption}
         options={field.options.choices}
         onChange={onChange}
-        onFocus={() => onFocus()}
-        onBlur={() => onBlur()}
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
     </div>
   )

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import RecordSorter from '../../molecules/RecordSorter';
 import RecordGroupDropdown from '../../molecules/RecordGroupDropdown';
-//import RecordFilter from '../../organisms/RecordFilter/Container';
+import NewRecordDropdown from '../../molecules/NewRecordDropdown';
 import { useSelector } from 'react-redux';
 import IRootStore from '../../../types/store/root';
 
@@ -29,6 +29,7 @@ const RecordActionsBar: FC = () => {
         <RecordGroupDropdown />
       }
       <RecordSorter />
+      <NewRecordDropdown />
     </div>
   )
 }

@@ -19,12 +19,14 @@ export interface IRecordsQuery {
 export default interface IRecordsState {
   isFetchingOne: boolean;
   isFetchingList: boolean;
+  isFetchingTempRecords: boolean;
   isCreating: boolean;
   isUpdating: boolean;
   isSynced: boolean;
   isNew: boolean;
   isSorting: boolean;
   records: IRecordModel[];
+  tempRecords: IRecordModel[];
   record: null | IRecordModel;
   relatedToRecords: IRecordModel[],
   relatedToRecord: IRecordModel[],
@@ -36,11 +38,14 @@ export enum IRecordActionTypes {
   CREATE_RECORD_SUCCESS = 'CREATE_RECORD_SUCCESS',
   GET_RECORDS_START = 'GET_RECORDS_START',
   GET_RECORDS_SUCCESS = 'GET_RECORDS_SUCCESS',
+  GET_TEMP_RECORDS_START = 'GET_TEMP_RECORDS_START',
+  GET_TEMP_RECORDS_SUCCESS = 'GET_TEMP_RECORDS_SUCCESS',
   GET_RECORD_START = 'GET_RECORD_START',
   GET_RECORD_SUCCESS = 'GET_RECORD_SUCCESS',
   UPDATE_RECORD_START = 'UPDATE_RECORD_START',
   UPDATE_RECORD_SUCCESS = 'UPDATE_RECORD_SUCCESS',
   CLEAR_RECORDS = 'CLEAR_RECORDS',
+  CLEAR_TEMP_RECORDS = 'CLEAR_TEMP_RECORDS',
   CLEAR_RECORD = 'CLEAR_RECORD',
   SET_SORTING = 'SET_SORTING',
 }
@@ -69,6 +74,17 @@ export interface GetRecordsSuccess {
   }
 }
 
+export interface GetTempRecordsStart {
+  type: IRecordActionTypes.GET_TEMP_RECORDS_START
+}
+
+export interface GetTempRecordsSuccess {
+  type: IRecordActionTypes.GET_TEMP_RECORDS_SUCCESS;
+  payload: {
+    tempRecords: IRecordModel[];
+  }
+}
+
 export interface GetRecordStart {
   type: IRecordActionTypes.GET_RECORD_START
 }
@@ -92,6 +108,10 @@ export interface ClearRecords {
   type: IRecordActionTypes.CLEAR_RECORDS;
 }
 
+export interface ClearTempRecords {
+  type: IRecordActionTypes.CLEAR_TEMP_RECORDS;
+}
+
 export interface ClearRecord {
   type: IRecordActionTypes.CLEAR_RECORD;
 }
@@ -108,10 +128,13 @@ export type IRecordsAction =
   | CreateRecordSuccess
   | GetRecordsStart
   | GetRecordsSuccess
+  | GetTempRecordsStart
+  | GetTempRecordsSuccess
   | GetRecordStart
   | GetRecordSuccess
   | UpdateRecordStart
   | UpdateRecordSuccess
   | ClearRecords
+  | ClearTempRecords
   | ClearRecord
   | SetSorting;
