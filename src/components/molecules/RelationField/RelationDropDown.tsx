@@ -13,8 +13,7 @@ const RelationDropDown = (props: any) => {
     style,
     onFocus,
     onBlur,
-    onChange,
-    update
+    onChange
   } = props;
   
   const dispatch = useDispatch();
