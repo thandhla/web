@@ -34,7 +34,7 @@ const RecordForm: FC<CIRecordForm> = ({ recordId }) => {
       setRecordFetched(true);
     }
 
-    if (collection && recordFetched) {
+    if (collection && recordFetched && rawRecord) {
       const formRecord = recordTemplate(collection.fields, rawRecord)
       setCleanRecord(formRecord);
       editRecord(formRecord);
@@ -47,16 +47,32 @@ const RecordForm: FC<CIRecordForm> = ({ recordId }) => {
     }
   }, [isSynced, history]);
 
-  if (!collection || !rawRecord) {
-    return <div>Loading RecordForm....</div>
-  }
-
-  const formIsDirty = JSON.stringify(cleanRecord.fields) !== JSON.stringify(record.fields);
-
   const cancelEditing = () => {
     dispatch(clearRecord());
     history.push({ search: '' });
   }
+
+  if (!collection || !rawRecord) {
+    return (
+      <Card
+        containerStyle={{
+          width: '80%',
+          height: '75%',
+        }}
+      >
+        <div className="buttons" style={{ marginTop: '20px' }}>
+          <button
+            className="btn"
+            style={{ marginRight: "10px" }}
+            onClick={() => cancelEditing()}
+          >Cancel</button>
+        </div>
+        <div>Loading RecordForm...</div>
+      </Card>
+    )
+  }
+
+  const formIsDirty = JSON.stringify(cleanRecord.fields) !== JSON.stringify(record.fields);
 
   const updateField = (fieldId: string, value: any) => {
     const fields = { ...record.fields, [fieldId]: value };

@@ -5,7 +5,7 @@ import { IViewModel, IViewTypes } from '../../types/database';
 import { getWorkspace, clearWorkspace } from '../../actions/workspaces';
 import { getCollection, clearCollection } from '../../actions/collections';
 import { getRecords, clearRecords, clearRecord } from '../../actions/records';
-import { getView } from '../../actions/views';
+import { clearView, clearViews, getView } from '../../actions/views';
 import routes from '../../config/routes';
 import url from '../../utils/url';
 import { Link, useParams, Redirect } from 'react-router-dom';
@@ -101,6 +101,8 @@ const ReadCollectionPage: FC = () => {
       dispatch(clearCollection());
       dispatch(clearRecords());
       dispatch(clearRecord());
+      dispatch(clearViews());
+      dispatch(clearView());
     }
   }, [dispatch]);
   

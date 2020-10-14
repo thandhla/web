@@ -38,7 +38,8 @@ export default (
         ...state,
         ...action.payload,
         isCreating: false,
-        isNew: true
+        isNew: true,
+        isSynced: false
       };
     }
 
