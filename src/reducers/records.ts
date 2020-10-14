@@ -6,12 +6,14 @@ import IRecordsState, {
 export const initialState: IRecordsState = {
   isFetchingOne: false,
   isFetchingList: false,
+  isFetchingTempRecords: false,
   isCreating: false,
   isUpdating: false,
   isSynced: true,
   isNew: false,
   isSorting: false,
   records: [],
+  tempRecords: [],
   record: null,
   relatedToRecords: [],
   relatedToRecord: [],
@@ -55,6 +57,20 @@ export default (
       };
     }
 
+    case types.GET_TEMP_RECORDS_START: {
+      return {
+        ...state,
+        isFetchingTempRecords: true
+      };
+    }
+    case types.GET_TEMP_RECORDS_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+        isFetchingTempRecords: false
+      };
+    }
+
     case types.GET_RECORD_START: {
       return {
         ...state,
@@ -89,6 +105,13 @@ export default (
         ...state,
         records: [],
         relatedToRecords: [],
+      };
+    }
+
+    case types.CLEAR_TEMP_RECORDS: {
+      return {
+        ...state,
+        tempRecords: []
       };
     }
     

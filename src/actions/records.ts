@@ -8,11 +8,14 @@ import {
   GetRecordStart,
   GetRecordSuccess,
   ClearRecords,
+  ClearTempRecords,
   ClearRecord,
   IRecordsQuery,
   SetSorting,
   UpdateRecordStart,
   UpdateRecordSuccess,
+  GetTempRecordsStart,
+  GetTempRecordsSuccess,
 } from '../types/store/records';
 import IRootStore from '../types/store/root';
 import { IRecordModel } from '../types/database';
@@ -88,6 +91,39 @@ export const getRecords = (submitedQuery?: IRecordsQuery) => {
   }
 }
 
+export const getTempRecords = (query?: IRecordsQuery) => {
+  return (dispatch: Dispatch, getState: () => IRootStore) => {
+    const getTempRecordsStart: GetTempRecordsStart = {
+      type: types.GET_TEMP_RECORDS_START
+    };
+    
+    dispatch(getTempRecordsStart);
+
+    const response = ipcRenderer.sendSync('nbql', {
+      records: {
+        action: 'getRecords',
+        args: {
+          ...query,
+          related: false
+        }
+      }
+    });
+
+    if (response?.errors?.records) {
+      console.log({ recordsError: response.errors.records });
+      return;
+    }
+
+    const { items: tempRecords } = response.data.records;
+    const getTempRecordsSuccess: GetTempRecordsSuccess = {
+      type: types.GET_TEMP_RECORDS_SUCCESS,
+      payload: { tempRecords }
+    };
+    
+    dispatch(getTempRecordsSuccess);
+  }
+}
+
 export const getRecord = (id: string) => {
   return (dispatch: Dispatch, getState: () => IRootStore) => {
     const getRecordStart: GetRecordStart = {
@@ -149,11 +185,21 @@ export const updateRecord = (record: IRecordModel) => {
 
 export const clearRecords = () => {
   return (dispatch: Dispatch) => {
-    const actionClearRecords: ClearRecords = {
+    const clearRecords: ClearRecords = {
       type: types.CLEAR_RECORDS,
     };
     
-    dispatch(actionClearRecords);
+    dispatch(clearRecords);
+  }
+}
+
+export const clearTempRecords = () => {
+  return (dispatch: Dispatch) => {
+    const clearTempRecords: ClearTempRecords = {
+      type: types.CLEAR_TEMP_RECORDS,
+    };
+    
+    dispatch(clearTempRecords);
   }
 }
 
