@@ -1,3 +1,1 @@
-import RecordGroupDropdown from './RecordGroupDropdown';
-
-export default RecordGroupDropdown;
+export { default } from './RecordGroupDropdown';

@@ -1,3 +1,1 @@
-import NewRecordDropdown from './NewRecordDropdown';
-
-export default NewRecordDropdown;
+export { default } from './NewRecordDropdown';

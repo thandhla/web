@@ -1,3 +1,1 @@
-import LineField from './LineField';
-
-export default LineField;
+export { default } from './LineField';

@@ -1,3 +1,1 @@
-import RelationField from './RelationField';
-
-export default RelationField;
+export { default } from './RelationField';

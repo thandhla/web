@@ -1,3 +1,1 @@
-import FieldWidget from './FieldWidget';
-
-export default FieldWidget;
+export { default } from './FieldWidget';

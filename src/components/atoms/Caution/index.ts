@@ -1,3 +1,1 @@
-import Caution from './Caution';
-
-export default Caution;
+export { default } from './Caution';
