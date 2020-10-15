@@ -37,7 +37,7 @@ const FieldFactory = (props: any) => {
     default:
       return (
         <Caution
-          details="Field type error"
+          details={`Unknown field type: ${props.field.type}`}
           text={props.edit ? 'Field type error' : ''}
         />
       );

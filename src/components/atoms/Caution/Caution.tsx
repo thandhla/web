@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 
 interface CICaution {
-  details: string;
-  text: string;
+  details?: string;
+  text?: string;
 }
 
 const Caution: FC<CICaution> = ({ details, text }) => {
@@ -10,7 +10,7 @@ const Caution: FC<CICaution> = ({ details, text }) => {
     cursor: 'pointer'
   };
   
-  return <div style={style} title={details}>/!\ {text}</div>;
+  return <span style={style} title={details}>/!\ {text}</span>;
 }
 
 export default Caution;
