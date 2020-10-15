@@ -22,7 +22,8 @@ export default interface IRecordsState {
   isFetchingTempRecords: boolean;
   isCreating: boolean;
   isUpdating: boolean;
-  isSynced: boolean;
+  recordsSynced: boolean;
+  recordSynced: boolean;
   isNew: boolean;
   isSorting: boolean;
   records: IRecordModel[];
@@ -44,9 +45,12 @@ export enum IRecordActionTypes {
   GET_RECORD_SUCCESS = 'GET_RECORD_SUCCESS',
   UPDATE_RECORD_START = 'UPDATE_RECORD_START',
   UPDATE_RECORD_SUCCESS = 'UPDATE_RECORD_SUCCESS',
+  DELETE_RECORD_START = 'DELETE_RECORD_START',
+  DELETE_RECORD_SUCCESS = 'DELETE_RECORD_SUCCESS',
   CLEAR_RECORDS = 'CLEAR_RECORDS',
   CLEAR_TEMP_RECORDS = 'CLEAR_TEMP_RECORDS',
   CLEAR_RECORD = 'CLEAR_RECORD',
+  SET_RECORD_SYNC = 'SET_RECORD_SYNC',
   SET_SORTING = 'SET_SORTING',
 }
 
@@ -104,6 +108,14 @@ export interface UpdateRecordSuccess {
   type: IRecordActionTypes.UPDATE_RECORD_SUCCESS;
 }
 
+export interface DeleteRecordStart {
+  type: IRecordActionTypes.DELETE_RECORD_START;
+}
+
+export interface DeleteRecordSuccess {
+  type: IRecordActionTypes.DELETE_RECORD_SUCCESS;
+}
+
 export interface ClearRecords {
   type: IRecordActionTypes.CLEAR_RECORDS;
 }
@@ -123,6 +135,13 @@ export interface SetSorting {
   }
 }
 
+export interface SetRecordSync {
+  type: IRecordActionTypes.SET_RECORD_SYNC;
+  payload: {
+    recordSynced: boolean;
+  }
+}
+
 export type IRecordsAction =
   | CreateRecordStart
   | CreateRecordSuccess
@@ -134,7 +153,10 @@ export type IRecordsAction =
   | GetRecordSuccess
   | UpdateRecordStart
   | UpdateRecordSuccess
+  | DeleteRecordStart
+  | DeleteRecordSuccess
   | ClearRecords
   | ClearTempRecords
   | ClearRecord
+  | SetRecordSync
   | SetSorting;

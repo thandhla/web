@@ -16,6 +16,9 @@ import {
   UpdateRecordSuccess,
   GetTempRecordsStart,
   GetTempRecordsSuccess,
+  DeleteRecordStart,
+  DeleteRecordSuccess,
+  SetRecordSync,
 } from '../types/store/records';
 import IRootStore from '../types/store/root';
 import { IRecordModel } from '../types/database';
@@ -183,6 +186,34 @@ export const updateRecord = (record: IRecordModel) => {
   }
 }
 
+export const deleteRecord = (id: string) => {
+  return (dispatch: Dispatch) => {
+    const deleteRecordStart: DeleteRecordStart = {
+      type: types.DELETE_RECORD_START
+    };
+
+    dispatch(deleteRecordStart);
+    
+    const response = ipcRenderer.sendSync('nbql', {
+      record: {
+        action: 'deleteRecord',
+        args: { id }
+      }
+    });
+    
+    if (response?.errors?.record) {
+      console.log({ recordError: response.errors.record });
+      return;
+    }
+
+    const deleteRecordSuccess: DeleteRecordSuccess = {
+      type: types.DELETE_RECORD_SUCCESS
+    };
+       
+    dispatch(deleteRecordSuccess);
+  }
+}
+
 export const clearRecords = () => {
   return (dispatch: Dispatch) => {
     const clearRecords: ClearRecords = {
@@ -210,6 +241,19 @@ export const clearRecord = () => {
     };
     
     dispatch(actionClearRecord);
+  }
+}
+
+export const setRecordSynced = (synced: boolean) => {
+  return (dispatch: Dispatch) => {
+    const setRecordSync: SetRecordSync = {
+      type: types.SET_RECORD_SYNC,
+      payload: {
+        recordSynced: synced
+      }
+    };console.log('recod sync')
+    
+    dispatch(setRecordSync);
   }
 }
 
