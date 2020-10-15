@@ -6,9 +6,9 @@ import RelationField from '../molecules/RelationField';
 import NumberField from '../molecules/NumberField';
 import EmailField from '../molecules/EmailField';
 import UrlField from '../molecules/UrlField';
+import MultiSelectField from '../molecules/MultiSelectField';
 /*
 import DateField from '../molecules/DateField/DateField';
-import MultiSelectField from '../molecules/MultiSelectField/MultiSelectField';
 import TextBoxField from '../molecules/TextBoxField/TextBoxField';
 */
 
@@ -26,11 +26,11 @@ const FieldFactory = (props: any) => {
       return <EmailField { ...props } />;
     case 'url':
       return <UrlField { ...props } />;
+    case 'multiSelect':
+      return <MultiSelectField { ...props } />;
     /*
     case 'date':
       return <DateField { ...props } />;
-    case 'multiselect':
-      return <MultiSelectField { ...props } />;
     case 'textbox':
       return <TextBoxField { ...props } />;
     */
