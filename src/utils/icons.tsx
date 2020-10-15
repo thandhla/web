@@ -1,37 +1,48 @@
 import React from 'react';
-import * as FA from "react-icons/fa";
+import {
+  FaAlignJustify,
+  FaAt,
+  FaChevronCircleDown,
+  FaFont,
+  FaHashtag,
+  FaLink,
+  FaListUl,
+  FaRegCalendarAlt,
+  FaVectorSquare
+} from "react-icons/fa";
+import Caution from '../components/atoms/Caution';
 
 export const fieldIcon = (type: string) => {
   switch (type) {
     case 'line':
-      return <FA.FaFont />;
+      return <FaFont />;
     case 'email':
-      return <FA.FaAt />;
+      return <FaAt />;
     case 'number':
-      return <FA.FaHashtag />;
+      return <FaHashtag />;
     case 'link':
-      return <FA.FaLink />;
+      return <FaLink />;
     case 'date':
-      return <FA.FaRegCalendarAlt />;
+      return <FaRegCalendarAlt />;
     case 'dropdown':
-      return <FA.FaChevronCircleDown />;
+      return <FaChevronCircleDown />;
     case 'multi_select':
-      return <FA.FaListUl />;
+      return <FaListUl />;
     case 'textbox':
-      return <FA.FaAlignJustify />;
+      return <FaAlignJustify />;
     case 'relation':
-      return <FA.FaVectorSquare />;
+      return <FaVectorSquare />;
     default:
-      throw new Error('Unkmown fied type: ' + type);
+      return <Caution details={`No icon found for field type: ${type}`}/>;
   }
 };
 
 export const viewIcon = (type: string) => {
   switch (type) {
     case 'table':
-      return <FA.FaFont />;
+      return <FaFont />;
     case 'gallery':
-      return <FA.FaAt />;
+      return <FaAt />;
     default:
       return <div style={{ color: 'red' }}>View type error</div>;
   }
