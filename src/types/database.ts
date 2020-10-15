@@ -33,6 +33,10 @@ export interface ILineField extends ICollectionField {
   options: null;
 }
 
+export interface INumberField extends ICollectionField {
+  options: null;
+}
+
 export interface IDropDownField extends ICollectionField {
   options: {
     choices: IDropDownFieldChoice[]
