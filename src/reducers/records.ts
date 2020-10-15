@@ -9,7 +9,8 @@ export const initialState: IRecordsState = {
   isFetchingTempRecords: false,
   isCreating: false,
   isUpdating: false,
-  isSynced: true,
+  recordsSynced: true,
+  recordSynced: true,
   isNew: false,
   isSorting: false,
   records: [],
@@ -39,7 +40,7 @@ export default (
         ...action.payload,
         isCreating: false,
         isNew: true,
-        isSynced: false
+        recordsSynced: false
       };
     }
 
@@ -54,7 +55,7 @@ export default (
         ...state,
         ...action.payload,
         isFetchingList: false,
-        isSynced: true
+        recordsSynced: true
       };
     }
 
@@ -83,6 +84,7 @@ export default (
         ...state,
         ...action.payload,
         isFetchingOne: false,
+        recordSynced: true,
         isNew: false
       };
     }
@@ -97,7 +99,23 @@ export default (
       return {
         ...state,
         isUpdating: false,
-        isSynced: false
+        recordsSynced: false,
+        recordSynced: false
+      };
+    }
+
+    case types.DELETE_RECORD_START: {
+      return {
+        ...state,
+        isUpdating: true
+      };
+    }
+    case types.DELETE_RECORD_SUCCESS: {
+      return {
+        ...state,
+        isUpdating: false,
+        recordsSynced: false,
+        recordSynced: false
       };
     }
 
@@ -105,7 +123,7 @@ export default (
       return {
         ...state,
         records: [],
-        relatedToRecords: [],
+        relatedToRecords: []
       };
     }
 
@@ -122,6 +140,13 @@ export default (
         record: null,
         relatedToRecord: [],
         isNew: false
+      };
+    }
+
+    case types.SET_RECORD_SYNC: {
+      return {
+        ...state,
+        ...action.payload
       };
     }
 

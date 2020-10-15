@@ -1,5 +1,8 @@
 import { IRecordModel, ICollectionField } from "../types/database";
 
+const stringFields = ['line', 'number', 'email', 'url', 'date', 'time'];
+const arrayFields = ['dropdown', 'relation', 'multiselect', ];
+
 /**
  * Is used to make sure that when a record is passed to the form no fields are missing
  */
@@ -11,7 +14,15 @@ const recordTemplate = (template: ICollectionField[], data: any): IRecordModel =
   };
   
   for (const field of template) {
-    record.fields[field.id] = data.fields[field.id];
+    const value = data.fields[field.id];
+
+    if (stringFields.includes(field.type)) {
+      record.fields[field.id] = value !== undefined ? value : "";
+    }
+    
+    if (arrayFields.includes(field.type)) {
+      record.fields[field.id] = value !== undefined ? value : [];
+    }
   }
 
   return record;

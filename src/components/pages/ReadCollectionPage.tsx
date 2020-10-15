@@ -22,13 +22,13 @@ const ReadCollectionPage: FC = () => {
     collection,
     records, record,
     isCreating,
-    isSynced,
+    recordsSynced,
     isNew,
     view
   } = useSelector(({
     workspaces: { workspace },
     collections: { collection },
-    records: { records, record, isCreating, isSynced, isNew },
+    records: { records, record, isCreating, recordsSynced, isNew },
     views: { views, view }
   }: IRootStore) => ({
     workspace,
@@ -36,7 +36,7 @@ const ReadCollectionPage: FC = () => {
     records,
     record,
     isCreating,
-    isSynced,
+    recordsSynced,
     isNew,
     view,
   }));
@@ -90,10 +90,10 @@ const ReadCollectionPage: FC = () => {
   ]);
 
   useEffect(() => {
-    if (!isSynced) {
+    if (!recordsSynced) {
       dispatch(getRecords());
     }
-  }, [isSynced, dispatch]);
+  }, [recordsSynced, dispatch]);
 
   useEffect(() => {
     return () => {
