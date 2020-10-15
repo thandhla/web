@@ -1,3 +1,1 @@
-import RecordSorter from './RecordSorter';
-
-export default RecordSorter;
+export { default } from './RecordSorter';

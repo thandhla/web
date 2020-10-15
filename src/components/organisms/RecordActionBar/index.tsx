@@ -1,3 +1,1 @@
-import RecordActionBar from './RecordActionBar';
-
-export default RecordActionBar;
+export { default } from './RecordActionBar';
