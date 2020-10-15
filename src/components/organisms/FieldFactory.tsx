@@ -29,7 +29,7 @@ const FieldFactory = (props: any) => {
       return <LinkField { ...props } />;
     case 'date':
       return <DateField { ...props } />;
-    case 'multi_select':
+    case 'multiselect':
       return <MultiSelectField { ...props } />;
     case 'textbox':
       return <TextBoxField { ...props } />;

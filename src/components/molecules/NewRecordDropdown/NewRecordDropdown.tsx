@@ -14,7 +14,7 @@ const NewRecordDropdown: FC = () => {
   }: IRootStore) => ({ collection, isCreating, isNew, record }));
 
   useEffect(() => {
-    if (isNew && record) { 
+    if (isNew && record) {
       history.push({ search: `?r=${record.id}` });
     }
   }, [isNew, record, history]);
