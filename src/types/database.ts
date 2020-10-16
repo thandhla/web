@@ -68,6 +68,10 @@ export interface IUpdatedAtField extends ICollectionField {
   options: null;
 }
 
+export interface ICheckboxField extends ICollectionField {
+  options: null;
+}
+
 export type ICollectionFields = 
   | ILineField
   | IDropDownField;

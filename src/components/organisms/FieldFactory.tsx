@@ -9,6 +9,7 @@ import UrlField from '../molecules/UrlField';
 import MultiSelectField from '../molecules/MultiSelectField';
 import CreatedAt from '../molecules/CreatedAt'
 import UpdatedAt from '../molecules/UpdatedAt'
+import Checkbox from '../molecules/CheckboxField'
 /*
 import DateField from '../molecules/DateField/DateField';
 import TextBoxField from '../molecules/TextBoxField/TextBoxField';
@@ -48,6 +49,8 @@ const FieldFactory = (props: any) => {
       return <CreatedAt { ...fieldProps } />;
     case 'updatedAt':
       return <UpdatedAt { ...fieldProps } />;
+    case 'checkbox':
+      return <Checkbox { ...fieldProps } />;
     /*
     case 'date':
       return <DateField { ...props } />;

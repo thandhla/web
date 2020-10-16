@@ -2,6 +2,7 @@ import React from 'react';
 import {
   FaAlignJustify,
   FaAt,
+  FaCheckSquare,
   FaChevronCircleDown,
   FaFont,
   FaHashtag,
@@ -38,6 +39,8 @@ export const fieldIcon = (type: string) => {
       return <FaRegCalendarPlus />;
     case 'updatedAt':
       return <FaRegCalendarCheck />;
+    case 'checkbox':
+      return <FaCheckSquare />;
     default:
       return <Caution details={`No icon found for field type: ${type}`}/>;
   }
