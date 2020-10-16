@@ -17,7 +17,7 @@ const ListGroups: FC<CIListGroups> = ({ viewFields, records, by }) => {
   delete rawGroups.undefined;
 
   const field: IDropDownField = viewFields.find((viewField) => viewField.id === by);
-  const groupWithValueEmpty = records.filter((record) => !record.fields[field.id]);
+  const groupWithValueEmpty = records.filter((record) => record.fields[field.id] === "" || !record.fields[field.id]);
   const emptyChoice = {
     value: 'empty',
     label: `No ${field.label}`
@@ -31,10 +31,12 @@ const ListGroups: FC<CIListGroups> = ({ viewFields, records, by }) => {
   for (const choice of choices) {
     const records = groups[choice.value];
 
+    if (!records) continue;
+
     rowGroups.push(() => (
       <>
         <tr className="no-hover">
-          <td colSpan={viewFields.length}>{choice.label}</td>
+          <td colSpan={viewFields.length}>({field.label}): {choice.label}</td>
         </tr>
         <ListRows {...{ viewFields, records }} />
       </>
