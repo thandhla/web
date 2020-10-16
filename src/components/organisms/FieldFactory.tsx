@@ -5,8 +5,8 @@ import DropdownField from '../molecules/DropdownField';
 import RelationField from '../molecules/RelationField';
 import NumberField from '../molecules/NumberField';
 import EmailField from '../molecules/EmailField';
+import UrlField from '../molecules/UrlField';
 /*
-import LinkField from '../molecules/LinkField/LinkField';
 import DateField from '../molecules/DateField/DateField';
 import MultiSelectField from '../molecules/MultiSelectField/MultiSelectField';
 import TextBoxField from '../molecules/TextBoxField/TextBoxField';
@@ -24,10 +24,9 @@ const FieldFactory = (props: any) => {
       return <NumberField { ...props } />;
     case 'email':
       return <EmailField { ...props } />;
+    case 'url':
+      return <UrlField { ...props } />;
     /*
-    
-    case 'link':
-      return <LinkField { ...props } />;
     case 'date':
       return <DateField { ...props } />;
     case 'multiselect':

@@ -20,7 +20,7 @@ export const fieldIcon = (type: string) => {
       return <FaAt />;
     case 'number':
       return <FaHashtag />;
-    case 'link':
+    case 'url':
       return <FaLink />;
     case 'date':
       return <FaRegCalendarAlt />;
