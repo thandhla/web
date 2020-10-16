@@ -55,8 +55,8 @@ const RelationField: FC<CIRelationField> = ({
   }
 
   const onChange = (selectedOptions: any) => {
-    const updateVaue = selectedOptions ? selectedOptions.map((option: any) => option.value) : [];
-    update(updateVaue);
+    const value = selectedOptions ? selectedOptions.map((option: any) => option.value) : [];
+    update(value);
   }
 
   return (
