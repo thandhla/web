@@ -26,7 +26,7 @@ export const fieldIcon = (type: string) => {
       return <FaRegCalendarAlt />;
     case 'dropdown':
       return <FaChevronCircleDown />;
-    case 'multi_select':
+    case 'multiSelect':
       return <FaListUl />;
     case 'textbox':
       return <FaAlignJustify />;

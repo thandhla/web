@@ -47,6 +47,12 @@ export interface IDropDownField extends ICollectionField {
   };
 }
 
+export interface IMultiSelectField extends ICollectionField {
+  options: {
+    choices: IDropDownFieldChoice[]
+  };
+}
+
 export interface IRelationField extends ICollectionField {
   options: {
     collectionId: string;
