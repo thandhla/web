@@ -8,13 +8,14 @@ import EmailField from '../molecules/EmailField';
 import UrlField from '../molecules/UrlField';
 import MultiSelectField from '../molecules/MultiSelectField';
 import CreatedAt from '../molecules/CreatedAt'
+import UpdatedAt from '../molecules/UpdatedAt'
 /*
 import DateField from '../molecules/DateField/DateField';
 import TextBoxField from '../molecules/TextBoxField/TextBoxField';
 */
 
 const FieldFactory = (props: any) => {
-  const needsRecord = ['createdAt']
+  const needsRecord = ['createdAt', 'updatedAt'];
   let fieldProps: any;
 
   if (needsRecord.includes(props.field.type)) {
@@ -45,6 +46,8 @@ const FieldFactory = (props: any) => {
       return <MultiSelectField { ...fieldProps } />;
     case 'createdAt':
       return <CreatedAt { ...fieldProps } />;
+    case 'updatedAt':
+      return <UpdatedAt { ...fieldProps } />;
     /*
     case 'date':
       return <DateField { ...props } />;

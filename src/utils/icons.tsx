@@ -8,6 +8,7 @@ import {
   FaLink,
   FaListUl,
   FaRegCalendarAlt,
+  FaRegCalendarCheck,
   FaRegCalendarPlus,
   FaVectorSquare
 } from "react-icons/fa";
@@ -35,6 +36,8 @@ export const fieldIcon = (type: string) => {
       return <FaVectorSquare />;
     case 'createdAt':
       return <FaRegCalendarPlus />;
+    case 'updatedAt':
+      return <FaRegCalendarCheck />;
     default:
       return <Caution details={`No icon found for field type: ${type}`}/>;
   }
