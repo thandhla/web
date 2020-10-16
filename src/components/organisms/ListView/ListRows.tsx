@@ -20,7 +20,7 @@ const ListRows: FC<CIListRows> = ({ viewFields, records }) => {
             <td key={index}>
               <FieldFactory
                 field={viewfield}
-                data={record.fields[viewfield.id]}
+                record={record}
               />
             </td>
           )}

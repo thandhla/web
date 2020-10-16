@@ -60,6 +60,10 @@ export interface IRelationField extends ICollectionField {
   };
 }
 
+export interface ICreatedAtField extends ICollectionField {
+  options: null;
+}
+
 export type ICollectionFields = 
   | ILineField
   | IDropDownField;
@@ -87,4 +91,6 @@ export interface IRecordModel {
   id: string;
   collectionId: string;
   fields: any;
+  createdAt: string;
+  updatedAt: string;
 }

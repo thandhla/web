@@ -22,7 +22,9 @@ const RecordForm: FC<CIRecordForm> = ({ recordId }) => {
   const emptyRecord: IRecordModel = {
     id: '',
     collectionId: '',
-    fields: {}
+    fields: {},
+    createdAt: "",
+    updatedAt: ""
   };
   const history = useHistory();
   const [recordFetched, setRecordFetched] = useState(false);
@@ -133,7 +135,7 @@ const RecordForm: FC<CIRecordForm> = ({ recordId }) => {
         <RecordField
           key={collectionField.id}
           field={collectionField}
-          data={record.fields[collectionField.id]}
+          record={record}
           update={(value: any) => updateField(collectionField.id, value)}
         />
       )}

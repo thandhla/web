@@ -10,7 +10,9 @@ const recordTemplate = (template: ICollectionField[], data: any): IRecordModel =
   let record: IRecordModel = {
     id: data.id,
     collectionId: data.collectionId,
-    fields: {}
+    fields: {},
+    createdAt: data.createdAt,
+    updatedAt: data.updatedAt
   };
   
   for (const field of template) {

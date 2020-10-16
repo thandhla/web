@@ -20,7 +20,7 @@ const RelationPreview: FC<CIRelationPreview> = ({ field, recordIds }) => {
         <Label key={index}>
           <FieldFactory
             field={field}
-            data={record.fields[field.id]}
+            record={record}
           />
         </Label>
       )}

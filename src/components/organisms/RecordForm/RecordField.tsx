@@ -4,11 +4,11 @@ import FieldWidget from "../FieldWidget";
 
 interface CIRecordField {
   field: any;
-  data: any;
+  record: any;
   update: any;
 }
 
-const RecordField: FC<CIRecordField> = ({ field, data, update }) => {
+const RecordField: FC<CIRecordField> = ({ field, record, update }) => {
   const [focus, setFocus] = useState(false);
   
   return (
@@ -24,7 +24,7 @@ const RecordField: FC<CIRecordField> = ({ field, data, update }) => {
       <FieldFactory
         edit
         field={field}
-        data={data}
+        record={record}
         style={{ width: '60%' }}
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
