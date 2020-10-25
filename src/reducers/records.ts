@@ -13,15 +13,16 @@ export const initialState: IRecordsState = {
   recordSynced: true,
   isNew: false,
   isSorting: false,
+  isSettingRecords: false,
   records: [],
+  allRecords: [],
   tempRecords: [],
   record: null,
   relatedToRecords: [],
   relatedToRecord: [],
   query: {
-    collectionId: '',
-    sorts: [],
-  }
+    sorts: []
+  },
 };
   
 export default (
@@ -47,15 +48,17 @@ export default (
     case types.GET_RECORDS_START: {
       return {
         ...state,
-        isFetchingList: true
+        isFetchingList: true,
+        isSettingRecords: true
       };
     }
     case types.GET_RECORDS_SUCCESS: {
       return {
         ...state,
         ...action.payload,
+        recordsSynced: true,
         isFetchingList: false,
-        recordsSynced: true
+        isSettingRecords: false
       };
     }
 
@@ -147,6 +150,21 @@ export default (
       return {
         ...state,
         ...action.payload
+      };
+    }
+
+    case types.SET_RECORDS_START: {
+      return {
+        ...state,
+        isSettingRecords: true
+      };
+    }
+
+    case types.SET_RECORDS_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+        isSettingRecords: false
       };
     }
 

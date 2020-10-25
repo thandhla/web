@@ -25,7 +25,7 @@ const RecordField: FC<CIRecordField> = ({ field, record, update }) => {
         edit
         field={field}
         record={record}
-        style={{ width: '60%' }}
+        style={{ width: '60%', marginBottom: '25px' }}
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
         update={update}

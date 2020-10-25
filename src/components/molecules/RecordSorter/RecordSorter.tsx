@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Button from '../../atoms/Button';
 import Card from '../../atoms/Card';
 import Sort from './Sort';
 import { useSelector, useDispatch } from 'react-redux';
 import IRootStore from '../../../types/store/root';
-import { getRecords, setSorting } from '../../../actions/records';
+import { setRecords, setSorting } from '../../../actions/records';
 
-const RecordSorter = () => {
+const RecordSorter: FC = () => {
   const dispatch = useDispatch();
   const { collection, query, isSorting } = useSelector(({
     collections: { collection },
@@ -56,7 +56,7 @@ const RecordSorter = () => {
   }
   
   const updateRecords = (updatedSorts: any) => {
-    dispatch(getRecords({ ...query, sorts: updatedSorts }));
+    dispatch(setRecords({ ...query, sorts: updatedSorts }));
   }
 
   return (
@@ -65,7 +65,7 @@ const RecordSorter = () => {
       padding: '2.5px 5px'
     }}>
       <Button
-        style={sorts.length > 0 ? style : {}}
+        style={isSorting || sorts.length > 0 ? style : {}}
         onClick={() => dispatch(setSorting(!isSorting))}
       >Sort</Button>
       {isSorting &&
@@ -73,7 +73,7 @@ const RecordSorter = () => {
           <Card
             header={() => <div>Sort</div>}
           >
-            {query.sorts.map((sort: any, index: number) =>
+            {sorts.map((sort: any, index: number) =>
               <Sort
                 key={index}
                 {...{

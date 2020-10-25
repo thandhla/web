@@ -1,7 +1,7 @@
 import { IRecordModel, ICollectionField } from "../types/database";
 
-const stringFields = ['line', 'number', 'email', 'url', 'date', 'time'];
-const arrayFields = ['dropdown', 'relation', 'multiSelect', ];
+const stringFields = ['line', 'number', 'email', 'url', 'date', 'time', 'dropdown'];
+const arrayFields = ['relation', 'multiSelect', ];
 
 /**
  * Is used to make sure that when a record is passed to the form no fields are missing

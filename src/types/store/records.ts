@@ -12,7 +12,6 @@ export interface IRecordsFilter {
 }
 
 export interface IRecordsQuery {
-  collectionId: string;
   sorts: IRecordsSort[];
 }
 
@@ -26,7 +25,9 @@ export default interface IRecordsState {
   recordSynced: boolean;
   isNew: boolean;
   isSorting: boolean;
+  isSettingRecords: boolean
   records: IRecordModel[];
+  allRecords: IRecordModel[];
   tempRecords: IRecordModel[];
   record: null | IRecordModel;
   relatedToRecords: IRecordModel[],
@@ -50,6 +51,8 @@ export enum IRecordActionTypes {
   CLEAR_RECORDS = 'CLEAR_RECORDS',
   CLEAR_TEMP_RECORDS = 'CLEAR_TEMP_RECORDS',
   CLEAR_RECORD = 'CLEAR_RECORD',
+  SET_RECORDS_START = 'SET_RECORDS_START',
+  SET_RECORDS_SUCCESS = 'SET_RECORDS_SUCCESS',
   SET_RECORD_SYNC = 'SET_RECORD_SYNC',
   SET_SORTING = 'SET_SORTING',
 }
@@ -72,7 +75,7 @@ export interface GetRecordsStart {
 export interface GetRecordsSuccess {
   type: IRecordActionTypes.GET_RECORDS_SUCCESS;
   payload: {
-    query: IRecordsQuery;
+    allRecords: IRecordModel[];
     records: IRecordModel[];
     relatedToRecords: IRecordModel[];
   }
@@ -128,6 +131,18 @@ export interface ClearRecord {
   type: IRecordActionTypes.CLEAR_RECORD;
 }
 
+export interface SetRecordsStart {
+  type: IRecordActionTypes.SET_RECORDS_START;
+}
+
+export interface SetRecordsSuccess {
+  type: IRecordActionTypes.SET_RECORDS_SUCCESS;
+  payload: {
+    query: IRecordsQuery;
+    records: IRecordModel[];
+  }
+}
+
 export interface SetSorting {
   type: IRecordActionTypes.SET_SORTING;
   payload: {
@@ -159,4 +174,6 @@ export type IRecordsAction =
   | ClearTempRecords
   | ClearRecord
   | SetRecordSync
-  | SetSorting;
+  | SetSorting
+  | SetRecordsStart
+  | SetRecordsSuccess;

@@ -39,10 +39,7 @@ const RelationDropDown = (props: any) => {
   const onFocusHandler = () => {
     onFocus();
     setTempRecordsFetched(true);
-    dispatch(getTempRecords({
-      collectionId: collection.id,
-      sorts: []
-    }));
+    dispatch(getTempRecords(collection.id));
   }
 
   useEffect(() => {

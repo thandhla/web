@@ -19,9 +19,12 @@ import {
   DeleteRecordStart,
   DeleteRecordSuccess,
   SetRecordSync,
+  SetRecordsStart,
+  SetRecordsSuccess,
 } from '../types/store/records';
 import IRootStore from '../types/store/root';
 import { IRecordModel } from '../types/database';
+import queryRecords from '../utils/queryRecords';
 
 const { ipcRenderer } = window.require("electron");
 
@@ -58,7 +61,7 @@ export const createRecord = (collectionId: string) => {
   }
 }
 
-export const getRecords = (submitedQuery?: IRecordsQuery) => {
+export const getRecords = (collectionId: string) => {
   return (dispatch: Dispatch, getState: () => IRootStore) => {
     const getRecordsStart: GetRecordsStart = {
       type: types.GET_RECORDS_START
@@ -66,13 +69,11 @@ export const getRecords = (submitedQuery?: IRecordsQuery) => {
     
     dispatch(getRecordsStart);
 
-    const { query: currentQuery } = getState().records;
-    const query = (submitedQuery === undefined) ? currentQuery : submitedQuery;
     const response = ipcRenderer.sendSync('nbql', {
       records: {
         action: 'getRecords',
         args: {
-          ...query,
+          collectionId,
           related: true
         }
       }
@@ -83,18 +84,22 @@ export const getRecords = (submitedQuery?: IRecordsQuery) => {
       return;
     }
 
-    const { items: records, related: relatedToRecords } = response.data.records;
+    const { items: allRecords, related: relatedToRecords } = response.data.records;
+    const records = queryRecords({
+      records: allRecords,
+      query: getState().records.query
+    });
 
     const getRecordsSuccess: GetRecordsSuccess = {
       type: types.GET_RECORDS_SUCCESS,
-      payload: { query, records, relatedToRecords }
+      payload: { allRecords, records, relatedToRecords }
     };
     
     dispatch(getRecordsSuccess);
   }
 }
 
-export const getTempRecords = (query?: IRecordsQuery) => {
+export const getTempRecords = (collectionId: string) => {
   return (dispatch: Dispatch, getState: () => IRootStore) => {
     const getTempRecordsStart: GetTempRecordsStart = {
       type: types.GET_TEMP_RECORDS_START
@@ -106,7 +111,7 @@ export const getTempRecords = (query?: IRecordsQuery) => {
       records: {
         action: 'getRecords',
         args: {
-          ...query,
+          collectionId,
           related: false
         }
       }
@@ -127,34 +132,49 @@ export const getTempRecords = (query?: IRecordsQuery) => {
   }
 }
 
-export const getRecord = (id: string) => {
+export const setRecords = (submitedQuery?: IRecordsQuery) => {
+  return (dispatch: Dispatch, getState: () => IRootStore) => {
+    const setRecordsStart: SetRecordsStart = {
+      type: types.SET_RECORDS_START
+    };
+
+    dispatch(setRecordsStart);
+
+    const { query: currentQuery, allRecords } = getState().records;
+    const query = (submitedQuery === undefined) ? currentQuery : submitedQuery;
+    const records = queryRecords({
+      query,
+      records: allRecords
+    });
+
+    const setRecordsSucess: SetRecordsSuccess = {
+      type: types.SET_RECORDS_SUCCESS,
+      payload: { records, query }
+    };
+
+    dispatch(setRecordsSucess);
+  }
+}
+
+export const setRecord = (id: string) => {
   return (dispatch: Dispatch, getState: () => IRootStore) => {
     const getRecordStart: GetRecordStart = {
       type: types.GET_RECORD_START
     };
     
     dispatch(getRecordStart);
-    
-    const response = ipcRenderer.sendSync('nbql', {
-      record: {
-        action: 'getRecord',
-        args: { id }
-      }
-    });
-    
-    if (response?.errors?.record) {
-      console.log({ recordError: response.errors.record });
-      return;
-    }
 
-    const getRecordSuccess: GetRecordSuccess = {
-      type: types.GET_RECORD_SUCCESS,
-      payload: {
-        record: response.data.record
-      }
-    };
-    
-    dispatch(getRecordSuccess);
+    const records = getState().records.records
+    const record = records.find(record => record.id == id);
+
+    if (record) {
+      const getRecordSuccess: GetRecordSuccess = {
+        type: types.GET_RECORD_SUCCESS,
+        payload: { record }
+      };
+      
+      dispatch(getRecordSuccess);
+    }
   }
 }
 

@@ -65,10 +65,7 @@ const ReadCollectionPage: FC = () => {
 
     if (collection && !recordsFetched) {
       setRecordsFetched(true);
-      dispatch(getRecords({
-        collectionId: collection.id,
-        sorts: []
-      }));
+      dispatch(getRecords(collection.id));
     }
     if (collection && viewExists() && !view) {
       dispatch(getView(viewId));
@@ -90,10 +87,10 @@ const ReadCollectionPage: FC = () => {
   ]);
 
   useEffect(() => {
-    if (!recordsSynced) {
-      dispatch(getRecords());
+    if (collection && !recordsSynced) {
+      dispatch(getRecords(collection.id));
     }
-  }, [recordsSynced, dispatch]);
+  }, [dispatch, collection, recordsSynced]);
 
   useEffect(() => {
     return () => {

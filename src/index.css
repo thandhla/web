@@ -19,6 +19,11 @@ th {
   font-weight: bold;
 }
 
+th:hover {
+  cursor: pointer;
+  background-color: #eee;
+}
+
 .header-link {
   margin-bottom: 20px;
 }
